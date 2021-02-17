@@ -5,15 +5,15 @@
     for (var x=0;x<vendors.length && !window.requestAnimationFrame; ++x){
         window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
         window.cancelAnimationFrame =
-            window[vendors[x]+'CancelAnimationFrame'] ||  window[vendors[x]+'CancelRequestAnimationFrame'];
+        window[vendors[x]+'CancelAnimationFrame'] ||  window[vendors[x]+'CancelRequestAnimationFrame'];
          
     }
 
     if(!window.requestAnimationFrame)
-        window.requestAnimationFrame = function(callback,element){
+        window.requestAnimationFrame = function(callback, element){
             var currTime= newDate().getTime();
-            var timeToCall = Math.max(0,16- (currTime - lastTime));
-            var id = window.setTimeout(function(){ callback(currTime + timeToCall);},
+            var timeToCall = Math.max(0, 16- (currTime - lastTime));
+            var id = window.setTimeout(function(){ callback(currTime + timeToCall); },
                 timeToCall);
             lastTime = currTime + timeToCall;
             return id;
@@ -24,9 +24,7 @@
             clearTimeout(id);
         };
     
-}
-
-());
+}());
 
 $(window).load(function(){
     game.init();/*necesario para evitar
@@ -43,6 +41,9 @@ var game={
         mostrar la pantalla de incio */
         levels.init();
         loader.init();
+        mouse.init();
+
+        //oculta todas las capas del juego y muestra la pantalla de incio
         $('.gamelayer').hide();
         $('#gamestartscreen').show();
 
@@ -61,6 +62,7 @@ var game={
 	// Coordenadas X & Y de la honda
 	slingshotX:140,
 	slingshotY:280,
+
 	start:function(){
 		$('.gamelayer').hide();
 		// Display the game canvas and score 
@@ -73,10 +75,84 @@ var game={
 		game.offsetLeft = 0;
 		game.ended = false;
 		game.animationFrame = window.requestAnimationFrame(game.animate,game.canvas);
-	},		
+	},
+    
+    // Velocidad máxima de panoramización por fotograma en píxeles
+	maxSpeed:3,
+	// Mínimo y Máximo desplazamiento panorámico
+	minOffset:0,
+	maxOffset:300,
+	// Desplazamiento de panorámica actual
+	offsetLeft:0,
+	// La puntuación del juego
+	score:0,
+
+    panTo:function(newCenter){
+		if (Math.abs(newCenter-game.offsetLeft-game.canvas.width/4)>0 
+			&& game.offsetLeft <= game.maxOffset && game.offsetLeft >= game.minOffset){
+		
+			var deltaX = Math.round((newCenter-game.offsetLeft-game.canvas.width/4)/2);
+			if (deltaX && Math.abs(deltaX)>game.maxSpeed){
+				deltaX = game.maxSpeed*Math.abs(deltaX)/(deltaX);
+			}
+			game.offsetLeft += deltaX; 
+		} else {
+			
+			return true;
+		}
+		if (game.offsetLeft <game.minOffset){
+			game.offsetLeft = game.minOffset;
+			return true;
+		} else if (game.offsetLeft > game.maxOffset){
+			game.offsetLeft = game.maxOffset;
+			return true;
+		}		
+		return false;
+	},
+
 
     handlePanning:function(){
-        game.offsetLeft++;//marcador de posicion temporal, mantiene la panoramica a la derecha
+        if(game.mode=="intro"){		
+            if(game.panTo(700)){
+                game.mode = "load-next-hero";
+            }			 
+        }	   
+
+        if (game.mode=="wait-for-firing"){  
+         if (mouse.dragging){
+             if (game.mouseOnCurrentHero()){
+                 game.mode = "firing";
+             } else {
+                 game.panTo(mouse.x + game.offsetLeft)
+             }
+         } else {
+             game.panTo(game.slingshotX);
+         }
+     }
+
+     if(game.mode=="wait-for-firing"){
+         if (mouse.dragging){
+             game.panTo(mouse.x + game.offsetLeft)
+         } else {
+             game.panTo(game.slingshotX);
+         }
+     }
+
+     if (game.mode == "load-next-hero"){
+         //to do
+         //comprobar si algun villano está vivo
+         //comprobar si quedan mas heroes para cargar
+         //cargar el heroe y fijar a modo de espero para disparar
+         game.mode="wait-for-firing";
+     }
+
+     if(game.mode == "firing"){
+         game.panTo(game.slingshotX);
+     }
+     if (game.mode=="fired"){
+         //to do
+         //hacer panoramica donde quiera que el heroe se encuentre actualmente
+     }
     },
 
     animate:function(){
@@ -150,7 +226,7 @@ var levels = {
         game.currentLevel.backgroundImage = loader.loadImage("images/backgrounds/"+level.background+".png");
         game.currentLevel.foregroundImage = loader.loadImage("images/backgrounds/"+level.foreground+".png");
         game.slingshotImage=loader.loadImage("images/slingshot.png");
-        game.slingshotFrontImage = loader,loadImage("images/slingshot-front.png");
+        game.slingshotFrontImage = loader.loadImage("images/slingshot-front.png");
 
         //llamar a game start cuando todo este cargado
         if(loader.loaded){
@@ -207,7 +283,7 @@ var loader = {
 
     itemLoaded:function(){
         loader.loadImage++;
-        $('#loadingmessage').html('Loaded ' +loader.loadedCount+' of' +loader.totalCount);
+        $('#loadingmessage').html('Loaded ' +loader.loadedCount+' of ' +loader.totalCount);
         if (loader.loadedCount === loader.totalCount){
             //el loader ha cargado completamente..
             loader.loaded=true;
@@ -220,5 +296,40 @@ var loader = {
             }
         }
     }
+}
+
+
+
+var mouse = {
+	x:0,
+	y:0,
+	down:false,
+	init:function(){
+		$('#gamecanvas').mousemove(mouse.mousemovehandler);
+		$('#gamecanvas').mousedown(mouse.mousedownhandler);
+		$('#gamecanvas').mouseup(mouse.mouseuphandler);
+		$('#gamecanvas').mouseout(mouse.mouseuphandler);
+	},
+	mousemovehandler:function(ev){
+		var offset = $('#gamecanvas').offset();
+		
+		mouse.x = ev.pageX - offset.left;
+		mouse.y = ev.pageY - offset.top;
+		
+		if (mouse.down) {
+			mouse.dragging = true;
+		}
+	},
+	mousedownhandler:function(ev){
+		mouse.down = true;
+		mouse.downX = mouse.x;
+		mouse.downY = mouse.y;
+		ev.originalEvent.preventDefault();
+		
+	},
+	mouseuphandler:function(ev){
+		mouse.down = false;
+		mouse.dragging = false;
+	}
 }
 
