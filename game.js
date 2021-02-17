@@ -69,8 +69,6 @@ var game={
 		$('#gamecanvas').show();
 		$('#scorescreen').show();
 	
-		game.startBackgroundMusic();
-	
 		game.mode = "intro";	
 		game.offsetLeft = 0;
 		game.ended = false;
@@ -87,6 +85,7 @@ var game={
 	// La puntuación del juego
 	score:0,
 
+    //despliegue de la pantalla para centrarse en newCenter
     panTo:function(newCenter){
 		if (Math.abs(newCenter-game.offsetLeft-game.canvas.width/4)>0 
 			&& game.offsetLeft <= game.maxOffset && game.offsetLeft >= game.minOffset){
@@ -118,17 +117,7 @@ var game={
             }			 
         }	   
 
-        if (game.mode=="wait-for-firing"){  
-         if (mouse.dragging){
-             if (game.mouseOnCurrentHero()){
-                 game.mode = "firing";
-             } else {
-                 game.panTo(mouse.x + game.offsetLeft)
-             }
-         } else {
-             game.panTo(game.slingshotX);
-         }
-     }
+       
 
      if(game.mode=="wait-for-firing"){
          if (mouse.dragging){
@@ -179,9 +168,8 @@ var game={
 
 }
 
-/*El objeto levels tiene un array
-con información acerca de cada
-nivel */
+/*El objeto levels tiene un array con información acerca 
+de cada nivel */
 var levels = {
     data:[
         {//Primer nivel
@@ -211,7 +199,7 @@ var levels = {
 		// Establecer los controladores de eventos de clic de botón para cargar el nivel
 		$('#levelselectscreen input').click(function(){
 			levels.load(this.value-1);
-			$('#levelselectscreen').hide();
+            $('#levelselectscreen').hide();
 		});
 	},
     //carga todos los datos e imagenes de un nivel
@@ -220,6 +208,7 @@ var levels = {
         game.currentLevel = {number:number,hero:[]};
         game.score=0;
         $('#score').html('Score: ' +game.score);
+        game.currentHero=undefined;
         var level = levels.data[number];
 
         //Carga el fondo, el primer plano y las imagenes de la honda
@@ -239,7 +228,7 @@ var levels = {
 
 var loader = {
     loaded:true,
-    loadedCount:0,//assets que han sido cargadps antes
+    loadedCount:0,//assets que han sido cargados antes
     totalCount:0,//numero de assets total necesarios a cargar
 
     init:function(){
@@ -247,6 +236,7 @@ var loader = {
         var mp3Support,oggSupport;
         var audio = document.createElement('audio');
         if (audio.canPlayType) {
+            //canPlayType() devuelve: "", "maybe" o "probably"
             mp3Support = "" != audio.canPlayType('audio/mpeg');
             oggSupport = "" != audio.canPlayType('audio/ogg; codecs="vorbis"');
 
@@ -256,7 +246,7 @@ var loader = {
             oggSupport = false;
         }
 
-        //Comprueba para ogg, mp3 y finalmente fija sound
+        //Comprueba para ogg, mp3 y finalmente fija soundFileExtn a indefinido
         loader.soundFileExtn = oggSupport?".gg":mp3Support?".mp3":undefined;
     },
 
@@ -282,7 +272,7 @@ var loader = {
     },
 
     itemLoaded:function(){
-        loader.loadImage++;
+        loader.loadedCount++;
         $('#loadingmessage').html('Loaded ' +loader.loadedCount+' of ' +loader.totalCount);
         if (loader.loadedCount === loader.totalCount){
             //el loader ha cargado completamente..
