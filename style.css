@@ -1,31 +1,33 @@
 #gamecontainer{
     width: 640px;
     height: 480px;
-    background:url(images/splashscreen.png);
-    border: 1px solid black;
+    background: url(images/splashscreen.png);
+    border: 3px solid green;
+    margin-left: 650px;
+    margin-top: 50px;
+
 }
-/*asegurar que todas las capas del juego se ubican en
-posicion aboluta, una encima de otra y ocultas por defecto*/
+
 .gamelayer{
     width: 640px;
     height: 480px;
-    position: absolute;
     display: none;
+    position: absolute;
+
 }
 
-/*Pantalla de inicio del juego*/
-#gamestartscreen {
+/*Home Screen*/
+#gamestartscreen{
     padding-top: 250px;
     text-align: center;
 }
 
-#gamestarscreen img{
+#gamestartscreen img {
     margin: 10px;
     cursor: pointer;
 }
 
-/*Pantalla de seleccion de nivel*/
-#levelselectscreen {
+#levelselectscreen{
     padding-top: 150px;
     padding-left: 50px;
 }
@@ -33,47 +35,48 @@ posicion aboluta, una encima de otra y ocultas por defecto*/
 #levelselectscreen input{
     margin: 20px;
     cursor: pointer;
-    background: url(images/icons/level.png) no-repeat;
-    color: yellow;
+    background: url(images/icons/level.png);
+    color:yellow;
     font-size: 20px;
     width: 64px;
     height: 64px;
-    border: 0;
+    border: 1px solid yellow;
 }
 
-#loadingscreen {
+#loadingscreen{
     background: rgba(100,100,100,0.3);
 }
 
-#loadingmessage {
-    margin-top: 400px;
+#loadingmessage{
+    margin-top:400px;
     text-align: center;
     height: 48px;
     color:white;
     background: url(images/loader.gif) no-repeat center;
-    font: 12px Arial;
+    font:12px Arial;
 }
 
-#scorescreen {
-    height: 60px;
-    font: 32px Comic Sans MS;
-    text-shadow: 0 0 2px #000;
-    color: white;
+#scorescreen{
+    height:60px;
+    font:32px Comic Sans MS;
+    text-shadow:  0 0 2px #000;
+    color:white;
 }
 
 #scorescreen img{
     opacity: 0.6;
-    position: relative;
+    top:10px;
+    position:relative;
     padding-left: 10px;
-    cursor: pointer;
-}
-#scorescreen #score {
-    position: absolute;
-    top: 5px;
-    right: 20px;
+    cursor:pointer;
 }
 
-/* Fin de pantalla */
-#endingscreen {
+#scorescreen #score{
+    position:absolute;
+    top:5px;
+    right:20px;
+}
+
+#endingscreen{
     text-align: center;
 }
