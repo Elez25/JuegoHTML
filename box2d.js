@@ -15,7 +15,7 @@ var b2World = Box2D.Dynamics.b2World;
 
 
 var b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape;
-var b2CircleShape  Box2D.Collision.Shapes.b2CircleShape;
+var b2CircleShape = Box2D.Collision.Shapes.b2CircleShape;
 var b2DebugDraw = Box2D.Dynamics.b2DebugDraw;
 var b2RevoluteJointDef = Box2D.Dynamics.Joints.b2RevoluteJointDef;
 
