@@ -26,54 +26,19 @@ function init(){
 
 	world = new b2World(gravity,allowSleep);
 
-	createFloor();
-	//Crear algunos cuerpos con formas simples
-	createRectangularBody();
-	createCircularBody();
-	createSimplePolygon();
+    createFloor();
+    createRectangularBody();
+    createCircularBody();
+    setupDebugDraw();
+    createSimplePolygon();
 	createComplexBody();
 	createRevoluteJoint();
-	
-	setupDebugDraw();
-	animate();
+
+    animate();
 }
 
-var timeStep = 1/60;
-//La iteration sugerida para Box2D es 8 para la velocidad y 3 para la posicion
-var velocityIterations = 8;
-var positionIterations = 3;
-function animate(){
-	world.Step(timeStep,velocityIterations,positionIterations);
-	world.ClearForces();
-	world.DrawDebugData();
-
-	setTimeOut(animete,timeStep);
-}
-
-var context;
-function setupDebugDraw(){
-	context = document.getElementById('canvas').getContext('2d');
-
-	var debugDraw = new b2DebugDraw();
-
-	//Utilizar este contexto para dibujar la pantalla de depuracion
-	debugDraw.setSprite(context);
-	//Fijar la escala
-	debugDraw.SetDrawScale(scale);
-	//Rellenar las cajas con transparencia de 0.3
-	debugDraw.SetFillAlpha(0.3);
-	//Dibujar lineas con espesor de 1
-	debugDraw.SetLineThickness(1.0);
-	//Mostrar todas las formas y uniones
-	debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit);
-
-	//Empezar a utilizar el dibujo de depuracion en el mundo
-	world.SetDebugDraw(debugDraw);
-}
-
-//Crea el suelo
 function createFloor(){
-	//Una definicion Body que tiene todos los datos necesarios para construir un cuerpo rigido
+    //Una definicion Body que tiene todos los datos necesarios para construir un cuerpo rigido
 	var bodyDef = new b2BodyDef;
 	bodyDef.type = b2Body.b2_staticBody;
 	bodyDef.position.x = 640/2/scale;
@@ -89,7 +54,7 @@ function createFloor(){
 
 	fixtureDef.shape = new b2PolygonShape; //se fija la forma del objeto como poligono.
 
-		//b2PolygonShape tiene un metodo helper llamado SetAsBox 
+	//b2PolygonShape tiene un metodo helper llamado SetAsBox 
 	//que fija el poligono como una caja centrada en el origen del cuerpo padre 
 	//y toma ancho y alto de la caja como parametros
 
@@ -119,6 +84,7 @@ function createRectangularBody(){
 	var body = world.CreateBody(bodyDef);
 	var fixture = body.CreateFixture(fixtureDef);
 }
+
 //Crea una forma circular
 function createCircularBody(){
 	var bodyDef = new b2BodyDef;
@@ -136,7 +102,7 @@ function createCircularBody(){
 	var body = world.CreateBody(bodyDef);
 	var fixture = body.CreateFixture(fixtureDef);
 }
-//Crea un polígono simple (union de puntos)
+
 function createSimplePolygon(){
 	var bodyDef = new b2BodyDef;
 	bodyDef.type = b2Body.b2_dynamicBody;
@@ -161,7 +127,7 @@ function createSimplePolygon(){
 	fixtureDef.shape.SetAsArray(points,points.length);
 
 	var body = world.CreateBody(bodyDef);
-	var fixture = body.CreateFixture(fixture);
+	var fixture = body.CreateFixture(fixtureDef);
 }
 
 //Crea un poligono complejo (union de dos formas)
@@ -181,6 +147,7 @@ function createComplexBody(){
 	body.CreateFixture(fixtureDef);
 
 	//Crear el segundo accesorio y añadir una forma poligonal al cuerpo
+    fixtureDef.shape = new b2PolygonShape;
 	var points = [
 		new b2Vec2(0,0),
 		new b2Vec2(40/scale,50/scale),
@@ -188,15 +155,9 @@ function createComplexBody(){
 		new b2Vec2(-50/scale,100/scale),
 		new b2Vec2(-40/scale,50/scale),
 	];
-	fixtureDef.shape.SetAsArray(points,points.length);
+    fixtureDef.shape.SetAsArray(points,points.length);
 	body.CreateFixture(fixtureDef);
 }
-
-/*Conectar cuerpos con artefactos
-Box2D soporta muchos tipos de articulaciones como pulley
-(polea), gear (engranaje), distance (distancia), revolute
-(revolución) y weld (soldadura).
-*/
 
 function createRevoluteJoint(){
 	//Definir el primer cuerpo
@@ -213,9 +174,9 @@ function createRevoluteJoint(){
 	fixtureDef1.friction = 0.5;
 	fixtureDef1.restitution = 0.5;
 	fixtureDef1.shape = new b2PolygonShape;
-	fixtureDef1.shape.setAsBox(50/scale,10/scale);
+	fixtureDef1.shape.SetAsBox(50/scale,10/scale);
 
-	body1.CreateFixture(fixtureDef);
+	body1.CreateFixture(fixtureDef1);
 
 	//Definir el segundo cuerpo
 	//-------------------------
@@ -246,6 +207,41 @@ function createRevoluteJoint(){
 	var jointCenter = new b2Vec2(470/scale,50/scale);
 
 	jointDef.Initialize(body1,body2,jointCenter);
-	world.CreateJoint(joinDef);
+	world.CreateJoint(jointDef);
 
 }
+
+
+var timeStep = 1/60;
+//La iteration sugerida para Box2D es 8 para la velocidad y 3 para la posicion
+var velocityIterations = 8;
+var positionIterations = 3;
+function animate(){
+	world.Step(timeStep,velocityIterations,positionIterations);
+	world.ClearForces();
+	world.DrawDebugData();
+
+	setTimeout(animate,timeStep);
+}
+
+var context;
+function setupDebugDraw(){
+    context = document.getElementById('canvas').getContext('2d');
+
+    var debugDraw = new b2DebugDraw();
+
+	//Utilizar este contexto para dibujar la pantalla de depuracion
+	debugDraw.SetSprite(context);
+	//Fijar la escala
+	debugDraw.SetDrawScale(scale);
+	//Rellenar las cajas con transparencia de 0.3
+	debugDraw.SetFillAlpha(0.3);
+	//Dibujar lineas con espesor de 1
+	debugDraw.SetLineThickness(1.0);
+	//Mostrar todas las formas y uniones
+	debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit);
+
+	//Empezar a utilizar el dibujo de depuracion en el mundo
+	world.SetDebugDraw(debugDraw);
+}
+
