@@ -27,13 +27,24 @@ function init(){
 	world = new b2World(gravity,allowSleep);
 
     createFloor();
+	//crear algunos cuerpos con formas simples
     createRectangularBody();
     createCircularBody();
-    setupDebugDraw();
     createSimplePolygon();
+
+	//crear un cuerpo combinado con dos formas
 	createComplexBody();
+
+	//unir dos cuerpos mediante articulacion
 	createRevoluteJoint();
 
+	//crear cuerpo con datos especiales del usuario
+	createSpecialBody();
+
+	//crear contac listeners y registrar los eventos
+	listenForContact();
+
+	setupDebugDraw();
     animate();
 }
 
@@ -210,7 +221,79 @@ function createRevoluteJoint(){
 	world.CreateJoint(jointDef);
 
 }
+//Se salva una referencia a Body en una
+//variable llamada specialBody, fuera de la función.
+var specialBody;
+function createSpecialBody(){
+	var bodyDef = new b2BodyDef;
+	bodyDef.type = b2Body.b2_dynamicBody;
+	bodyDef.position.x=450/scale;
+	bodyDef.position.y=0/scale;
 
+	specialBody = world.CreateBody(bodyDef);
+	specialBody.SetUserData({name:"special",life:250});
+
+	//crear un accesorio para unir una forma circular al cuerpo
+	var fixtureDef = new b2FixtureDef;
+	fixtureDef.density = 1.0;
+	fixtureDef.friction = 0.5;
+	fixtureDef.restitution = 0.5;
+
+	fixtureDef.shape = new b2CircleShape(30/scale);
+
+	var fixture = specialBody.CreateFixture(fixtureDef);
+
+}
+
+function listenForContact(){
+	var listener = new Box2D.Dynamics.b2ContactListener;
+	listener.PostSolve = function(contact,impulse){
+		var body1 = contact.GetFixtureA().GetBody();
+		var body2 = contact.GetFixtureB().GetBody();
+		//si cualquiera de los cuerpos es special bodt, reduzca su vida
+		if (body1==specialBody || body2==specialBody){
+			var impulseAlongNormal = impulse.normalImpulses[0];
+			specialBody.GetUserData().life-=impulseAlongNormal;
+			console.log("the special body was in a collision with impulse", impulseAlongNormal,"and life now is", specialBody.GetUserData().life);
+		}
+	};
+	world.SetContactListener(listener);
+}
+
+
+function drawSpecialBody(){
+	//obtener posicion y angulo
+	var position = specialBody.GetPosition();
+	var angle = specialBody.GetAngle();
+
+	//trasladar y girar el eje a la posicion y angulo del cuerpo
+	context.translate(position.x*scale,position.y*scale);
+	context.rotate(angle);
+
+	//dibuja una cara circular llena
+	context.fillStyle = "rgb(200,150,250);";
+	context.beginPath();
+	context.arc(0,0,30,0,2*Math.PI,false);
+	context.fill();
+
+	//Dibujar dos ojos rectangualeres
+	context.fillStyle = "rgb(255,255,255);";
+	context.fillRect(-15,-15,10,5);
+	context.fillRect(5,-15,10,5);
+
+	//Dibujar un arco hacia arriba o hacia abajo para una sonrisa dependiendo de la vida
+	context.strokeStyle="rgb(255,255,255);";
+	if(specialBody.GetUserData().life>100){
+		context.arc(0,0,10,Math.PI,2*Math.PI,true);
+	} else {
+		context.arc(0,10,10,Math.PI,2*Math.PI,false);
+	}
+	context.stroke();
+
+	//trasladar y girar el eje de nuevo a la poscion orginal y el angulo
+	context.rotate(-angle);
+	context.translate(-position.x*scale,-position.y*scale);
+}
 
 var timeStep = 1/60;
 //La iteration sugerida para Box2D es 8 para la velocidad y 3 para la posicion
@@ -221,6 +304,16 @@ function animate(){
 	world.ClearForces();
 	world.DrawDebugData();
 
+	if (specialBody){
+		drawSpecialBody();
+	}
+
+	//Matar special Body si muere
+	if (specialBody && specialBody.GetUserData().life<=0){
+		world.DestroyBody(specialBody);
+		specialBody = undefined;
+		console.log("the special body was destroyed");
+	}
 	setTimeout(animate,timeStep);
 }
 
