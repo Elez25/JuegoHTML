@@ -5,8 +5,7 @@
     for (var x=0;x<vendors.length && !window.requestAnimationFrame; ++x){
         window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
         window.cancelAnimationFrame =
-        window[vendors[x]+'CancelAnimationFrame'] ||  window[vendors[x]+'CancelRequestAnimationFrame'];
-         
+        window[vendors[x]+'CancelAnimationFrame'] ||  window[vendors[x]+'CancelRequestAnimationFrame'];   
     }
 
     if(!window.requestAnimationFrame)
@@ -173,7 +172,7 @@ var game={
     drawAllBodies:function(){
         box2d.world.DrawDebugData();
         //Iterar a traves de todos los cuerpos y dibujarlos sobre el canvas del juego.
-        for(var body=box2d.world.GetBodyList();body;body = body.getNext()){
+        for(var body=box2d.world.GetBodyList();body;body = body.GetNext()){
             var entity = body.GetUserData();
 
             if(entity){
@@ -188,11 +187,11 @@ var game={
                         entity.breakSound.play();
                     }
                 } else{
-                    entity.draw(entity,body.GetPosition(),body.GetAngle())
+                    entities.draw(entity,body.GetPosition(),body.GetAngle())
                 }
             }
         }
-    }
+    },
 }
 
 /*****************
@@ -242,10 +241,10 @@ var levels = {
                 //VILLANOS
                 {type:"villain",name:"burger",x:715,y:155,calories:590},
                 {type:"villain",name:"fries",x:670,y:405,calories:420},
-                {type:"villain",name:"sodocan",x:765,y:400,calories:150},
+                {type:"villain",name:"sodacan",x:765,y:400,calories:150},
 
                 //HEROES
-                {type:"hero",name:"strawnerry",x:30,y:415},
+                {type:"hero",name:"strawberry",x:30,y:415},
                 {type:"hero",name:"orange",x:80,y:405},
                 {type:"hero",name:"apple",x:140,y:405},
             ]
@@ -485,8 +484,8 @@ var entities = {
                 entity.health = definition.fullHealth;
                 entity.fullHealth = definition.fullHealth;
                 entity.shape = "rectangle";
-                entity.sprite = loader.loadImage("../images/entities/"+entity.name+".png");
-                entity.breakSound = game.breakSound[entity.name];
+                entity.sprite = loader.loadImage("images/entities/"+entity.name+".png");
+                //entity.breakSound = game.breakSound[entity.name];
                 box2d.createRectangle(entity,definition);
                 break;
             case "ground": //Rectángulos simples
@@ -498,9 +497,9 @@ var entities = {
             case "villain": //Pueden ser círculos o rectangulos
                 entity.health = definition.fullHealth;
                 entity.fullHealth = definition.fullHealth;
-                entity.sprite = loader.loadImage("../images/entities/"+entity.name+".png");
+                entity.sprite = loader.loadImage("images/entities/"+entity.name+".png");
                 entity.shape = definition.shape;
-                entity.bounceSound = game.bounceSound;
+                //entity.bounceSound = game.bounceSound;
                 if(definition.shape == "circle"){
                     entity.radius = definition.radius;
                     box2d.createCircle(entity,definition);
@@ -542,6 +541,18 @@ var entities = {
         game.context.translate(-position.x*box2d.scale+game.offsetLeft,-position.y*box2d.scale);
     }
 }
+
+//Declarar objetos utilizados como variables
+var b2Vec2 = Box2D.Common.Math.b2Vec2;
+var b2BodyDef = Box2D.Dynamics.b2BodyDef;
+var b2Body = Box2D.Dynamics.b2Body;
+var b2FixtureDef = Box2D.Dynamics.b2FixtureDef;
+var b2Fixture = Box2D.Dynamics.b2Fixture;
+var b2World = Box2D.Dynamics.b2World; 
+var b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape;
+var b2CircleShape = Box2D.Collision.Shapes.b2CircleShape;
+var b2DebugDraw = Box2D.Dynamics.b2DebugDraw;
+var b2RevoluteJointDef = Box2D.Dynamics.Joints.b2RevoluteJointDef;
 
 /*****************
 ***OBJETO BOX2D***
