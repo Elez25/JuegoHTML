@@ -45,12 +45,23 @@ var game={
         loader.init();
         mouse.init();
 
+        //Cargar todos los efectos de sonido y música de fondo
+        //"Kindergarten by Gurdonark"
+        game.backgroundMusic = loader.loadSound('audio/gurdonark-kindergarten');
+        
+        game.slingshotReleasedSound = loader.loadSound("audio/released");
+        game.bounceSound = loader.loadSound('audio/bounce');
+        game.breakSound = {
+            "glass":loader.loadSound('audio/glassbreak'),
+            "wood":loader.loadSound('audio/woodbreak')
+        };
+
         //oculta todas las capas del juego y muestra la pantalla de incio
         $('.gamelayer').hide();
         $('#gamestartscreen').show();
 
         /*Obtener manejador para el canvas del juego y el contexto */
-        game.canvas = $('#gamecanvas')[0];
+        game.canvas = document.getElementById('gamecanvas');
         game.context= game.canvas.getContext('2d');  
     },
 
@@ -111,6 +122,20 @@ var game={
 		return false;
 	},
 
+    countHeroesAndVillains:function(){
+            game.heroes = [];
+            game.villains = [];
+            for(var body = box2d.world.GetBodyList();body;body=body.GetNext()){
+                var entity = body.GetUserData();
+                if(entity){
+                    if(entity.type=="hero"){
+                        game.heroes.push(body);
+                    } else if(entity.type="villain"){
+                        game.villains.push(body);
+                    }
+                }
+            }
+    },
 
     handlePanning:function(){
         if(game.mode=="intro"){		
@@ -119,31 +144,83 @@ var game={
             }			 
         }	   
 
-       
-
      if(game.mode=="wait-for-firing"){
-         if (mouse.dragging){
-             game.panTo(mouse.x + game.offsetLeft)
-         } else {
-             game.panTo(game.slingshotX);
+         if(mouse.dragging){
+             if(game.mouseOnCurrentHero()){
+                 game.mode="firing";
+             } else{
+                game.panTo(mouse.x + game.offsetLeft);
+             }
+         } else{
+            game.panTo(game.slingshotX);
          }
-     }
-
-     if (game.mode == "load-next-hero"){
-         //to do
-         //comprobar si algun villano está vivo
-         //comprobar si quedan mas heroes para cargar
-         //cargar el heroe y fijar a modo de espero para disparar
-         game.mode="wait-for-firing";
+         
      }
 
      if(game.mode == "firing"){
-         game.panTo(game.slingshotX);
+         if(mouse.down){
+             game.panTo(game.slingshotX);
+             game.currentHero.SetPosition({x:(mouse.x+game.offsetLeft)/box2d.scale,y:mouse.y/box2d.scale});
+         } else{
+             game.mode = "fired";
+             game.slingshotReleasedSound.play();
+             var impulseScaleFactor = 0.75;
+            
+             //Coordenadas del centro de la honda (donde la banda está atada a la honda)
+            var slingshotCenterX = game.slingshotX + 35;
+            var slingshotCenterY = game.slingshotY + 25;
+            var impulse = new b2Vec2((slingshotCenterX - mouse.x - game.offsetLeft)*impulseScaleFactor,(slingshotCenterY-mouse.y)*impulseScaleFactor);
+            game.currentHero.ApplyImpulse(impulse,game.currentHero.GetWorldCenter());
+         }
      }
+
      if (game.mode=="fired"){
-         //to do
-         //hacer panoramica donde quiera que el heroe se encuentre actualmente
+         //Vista panoramica donde quiera que el heroe se encuentre actualmente
+         var heroX = game.currentHero.GetPosition().x*box2d.scale;
+         game.panTo(heroX);
+         //Y esperar hasta que deja de moverse o está fuera de los límites
+         if(!game.currentHero.IsAwake() || heroX<0 || heroX>game.currentLevel.foregroundImage.width){
+             //Luego borra el viejo heroe
+             box2d.world.DestroyBody(game.currentHero);
+             game.currentHero = undefined;
+             //Carga el siguiente héroe
+             game.mode = "load-next-hero";
+         }
      }
+     if (game.mode == "load-next-hero"){
+         game.countHeroesAndVillains();
+        //comprobar si algun villano está vivo, si no, terminar el nivel (exito)
+        if(game.villains.length == 0){
+            game.mode = "level-success";
+            return;
+        }
+        //comprobar si quedan mas heroes para cargar, si no terminar el nivel (fallo)
+
+        if(game.heroes.length == 0){
+            game.mode = "level-failure";
+            return;
+        }
+        //cargar el heroe y fijar a modo de espero para disparar
+        if(!game.currentHero){
+            game.currentHero = game.heroes[game.heroes.length-1];
+            game.currentHero.SetPosition({x:180/box2d.scale,y:200/box2d.scale});
+            game.currentHero.SetLinearVelocity({x:0,y:0});
+            game.currentHero.SetAngularVelocity(0);
+            game.currentHero.SetAwake(true);
+        } else{
+            //Espera a que el heroe deja de rebotar y se duerma y luego cambie a espera a disparar (wait for firing)
+            game.panTo(game.slingshotX);
+                if(!game.currentHero.IsAwake()){
+                    game.mode = "wait-for-firing";
+                }
+            }
+        }
+        if(game.mode=="level-success" || game.mode =="level-failure"){
+            if(game.panTo(0)){
+                game.ended=true;
+                game.showEndingScreen();
+            }
+        }
     },
 
     animate:function(){
@@ -151,6 +228,17 @@ var game={
         game.handlePanning();
         
         //Anima los personajes
+        //La primera vez que se llama a animate, game.lastUpdateTimeCurrentTime es indefinido y no calcula timeStep ni box2dstep().
+        var currentTime = new Date().getTime();
+        var timeStep;
+        if(game.lastUpdatetime){
+            timeStep = (currentTime - game.lastUpdatetime)/1000;
+            if(timeStep>2/60){
+                timeStep=2/60;
+            }
+            box2d.step(timeStep);
+        }
+        game.lastUpdatetime = currentTime;
 
         //dibuja el fondo con desplazamiento
         game.context.drawImage(game.currentLevel.backgroundImage,game.offsetLeft/4,0,640,480,0,0,640,480);
@@ -161,6 +249,11 @@ var game={
 
         //Dibuja todos los cuerpos
         game.drawAllBodies();
+
+        //Dibujar la banda cuando estamos disparando un heroe
+        if(game.mode == "wait-for-firing" || game.mode == "firing"){
+            game.drawSlingshotBand();
+        }
 
         // Dibujar el frente de la honda
 		game.context.drawImage(game.slingshotFrontImage,game.slingshotX-game.offsetLeft,game.slingshotY);
@@ -192,6 +285,94 @@ var game={
             }
         }
     },
+    mouseOnCurrentHero:function(){
+        if(!game.currentHero){
+            return false;
+        }
+        var position = game.currentHero.GetPosition();
+        var distanceSquared = Math.pow(position.x*box2d.scale - mouse.x-game.offsetLeft,2) + Math.pow(position.y*box2d.scale-mouse.y,2);
+        var radiusSquared = Math.pow(game.currentHero.GetUserData().radius,2);
+        return (distanceSquared<=radiusSquared);
+    },
+    showEndingScreen:function(){
+        game.stopBackgroundMusic();
+        if(game.mode == "level-success"){
+            if(game.currentLevel.number<levels.data.length-1){
+                $('#endingmessage').html('Level Complete. Well Done!!!');
+                $('#playnextlevel').show();
+            } else{
+                $('#endingmessage').html('All Levels Complete. Well Done!!!');
+                $('#playnextlevel').hide();
+            }
+        } else if(game.mode == 'level-failure'){
+            $('#endingmessage').html('Failed. Play Again?');
+            $('#playnextlevel').hide();
+        }
+        $('#endingscreen').show();
+    },
+    drawSlingshotBand:function(){
+        game.context.strokeStyle = "rgb(68,31,11)" //Coor marrón oscuro
+        game.context.lineWidth = 6; //Dibuja una línea gruesa
+
+        //Utilizar el ángulo y el radio del héroe para calcular el centro del héroe
+        var radius = game.currentHero.GetUserData().radius;
+        var heroX = game.currentHero.GetPosition().x*box2d.scale;
+        var heroY = game.currentHero.GetPosition().y*box2d.scale;
+        var angle = Math.atan2(game.slingshotY+25-heroY,game.slingshotX+50-heroX);
+
+        var heroFarEdgeX = heroX - radius * Math.cos(angle);
+        var heroFarEdgeY = heroY - radius * Math.sin(angle);
+
+        game.context.beginPath();
+        //Iniciar la línea desde la parte superior de la honda(parte trasera)
+        game.context.moveTo(game.slingshotX+50-game.offsetLeft,game.slingshotY+25);
+
+        //Dibujar línea al centro del heroe
+        game.context.lineTo(heroX-game.offsetLeft,heroY);
+        game.context.stroke();
+
+        //Dibujar el héroe en la banda posterior
+        entities.draw(game.currentHero.GetUserData(),game.currentHero.GetPosition(),game.currentHero.GetAngle());
+
+        game.context.beginPath();
+        //Mover al borde del héroe más alejado de la parte superior de la honda
+        game.context.moveTo(heroFarEdgeX-game.offsetLeft,heroFarEdgeY);
+
+        //Dibujar línea de regreso a la parte superior de la honda (el lado frontal)
+        game.context.lineTo(game.slingshotX-game.offsetLeft +10,game.slingshotY+30);
+        game.context.stroke();
+    },
+    restartLevel:function(){
+        window.cancelAnimationFrame(game.animationFrame);
+        game.lastUpdatetime = undefined;
+        levels.load(game.currentLevel.number);
+    },
+    startNextLevel:function(){
+        window.cancelAnimationFrame(game.animationFrame);
+        game.lastUpdatetime = undefined;
+        levels.load(game.currentLevel.number+1);
+    },
+    startBackgroundMusic:function(){
+        var toggleImage = $("#togglemusic")[0];
+        game.backgroundMusic.play();
+        toggleImage.src="images/icons/sound.png";
+    },
+    stopBackgroundMusic:function(){
+        var toggleImage = $("togglemusic")[0];
+        toggleImage.src="images/icons/nosound.png";
+        game.backgroundMusic.pause();
+        game.backgroundMusic.currentTime = 0; // ir al principio de la canción
+    },
+    toggleBackgroundMusic:function(){
+        var toggleImage = $("#togglemusic")[0];
+        if(game.backgroundMusic.paused()){
+            game.backgroundMusic.play();
+            toggleImage.src="images/icons/sound.png";
+        } else{
+            game.backgroundMusic.pause();
+            $("togglemusic")[0].src="images/icons/nosound.png";
+        }
+    }
 }
 
 /*****************
@@ -233,14 +414,15 @@ var levels = {
                 {type:"block",name:"wood",x:720,y:380,angle:90,width:100,height:25},
                 {type:"block",name:"wood",x:620,y:380,angle:90,width:100,height:25},
                 {type:"block",name:"glass",x:670,y:317.5,angle:90,width:100,height:25},
+                {type:"block",name:"glass",x:770,y:317.5,angle:90,width:100,height:25},
 
-                {type:"block",name:"glass",x:715,y:155,angle:90,width:100,height:25},
+                {type:"block",name:"glass",x:670,y:255,angle:90,width:100,height:25},
                 {type:"block",name:"glass",x:770,y:255,angle:90,width:100,height:25},
                 {type:"block",name:"wood",x:770,y:192.5,width:100,height:25},
                 
                 //VILLANOS
                 {type:"villain",name:"burger",x:715,y:155,calories:590},
-                {type:"villain",name:"fries",x:670,y:405,calories:420},
+                {type:"villain",name:"fries",x:670,y:305,calories:420},
                 {type:"villain",name:"sodacan",x:765,y:400,calories:150},
 
                 //HEROES
@@ -262,7 +444,7 @@ var levels = {
 		};
 		$('#levelselectscreen').html(html);
 		
-		// Establecer los controladores de eventos de clic de botón para cargar el nivel
+		// Establecer los controladores de eventos de click de botón para cargar el nivel
 		$('#levelselectscreen input').click(function(){
 			levels.load(this.value-1);
             $('#levelselectscreen').hide();
@@ -325,7 +507,7 @@ var loader = {
         }
 
         //Comprueba para ogg, mp3 y finalmente fija soundFileExtn a indefinido
-        loader.soundFileExtn = oggSupport?".gg":mp3Support?".mp3":undefined;
+        loader.soundFileExtn = oggSupport?".ogg":mp3Support?".mp3":undefined;
     },
 
     loadImage:function(url){
@@ -485,10 +667,11 @@ var entities = {
                 entity.fullHealth = definition.fullHealth;
                 entity.shape = "rectangle";
                 entity.sprite = loader.loadImage("images/entities/"+entity.name+".png");
-                //entity.breakSound = game.breakSound[entity.name];
+                entity.breakSound = game.breakSound[entity.name];
                 box2d.createRectangle(entity,definition);
                 break;
             case "ground": //Rectángulos simples
+                //No hay necesidad de salud. Son indestructibles
                 entity.shape="rectangle";
                 //No es necesario sprites. Estos no serán dibujados
                 box2d.createRectangle(entity,definition);
@@ -499,7 +682,7 @@ var entities = {
                 entity.fullHealth = definition.fullHealth;
                 entity.sprite = loader.loadImage("images/entities/"+entity.name+".png");
                 entity.shape = definition.shape;
-                //entity.bounceSound = game.bounceSound;
+                entity.bounceSound = game.bounceSound;
                 if(definition.shape == "circle"){
                     entity.radius = definition.radius;
                     box2d.createCircle(entity,definition);
@@ -574,6 +757,36 @@ var box2d = {
         debugDraw.SetLineThickness(1.0);
         debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit);
         box2d.world.SetDebugDraw(debugDraw);
+
+        var listener = new Box2D.Dynamics.b2ContactListener;
+        listener.PostSolve = function(contact,impulse){
+            var body1 = contact.GetFixtureA().GetBody();
+            var body2 = contact.GetFixtureB().GetBody();
+            var entity1 = body1.GetUserData();
+            var entity2 = body2.GetUserData();
+            
+            var impulseAlongNormal = Math.abs(impulse.normalImpulses[0]);
+            //Este listener es llamado con mucha frecuencia. Filtra los impulsos pequeños.
+            //Después de probar diferentes valores, 5 parece funcionar ien
+            if(impulseAlongNormal>5){
+                //Si los objetos tienen una saludo, reduzca la salud por el valor del impulso
+                if(entity1.health){
+                    entity1.health-=impulseAlongNormal;
+                }
+                if(entity2.health){
+                    entity2.health-=impulseAlongNormal;
+                }
+                //Si los objetos tienen un sonido de rebote, reproducir
+                if(entity1.bounceSound){
+                    entity1.bounceSound.play();
+                }
+                if(entity2.bounceSound){
+                    entity2.bounceSound.play();
+                }
+            }
+
+        };
+        box2d.world.SetContactListener(listener);
     },
     createRectangle:function(entity,definition){
             var bodyDef = new b2BodyDef;
@@ -626,4 +839,12 @@ var box2d = {
         var fixture = body.CreateFixture(fixtureDef);
         return body;
     },
+    step:function(timeStep){
+        //Velociddad de las iteraciones = 8
+        //Posicion de las iteraciones = 3
+        if(timeStep>2/60){
+            timeStep = 2/60;
+        }
+        box2d.world.Step(timeStep,8,3);
+    }
 }
