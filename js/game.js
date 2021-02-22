@@ -365,12 +365,12 @@ var game={
     },
     toggleBackgroundMusic:function(){
         var toggleImage = $("#togglemusic")[0];
-        if(game.backgroundMusic.paused()){
+        if(game.backgroundMusic.paused){
             game.backgroundMusic.play();
             toggleImage.src="images/icons/sound.png";
         } else{
             game.backgroundMusic.pause();
-            $("togglemusic")[0].src="images/icons/nosound.png";
+            toggleImage.src="images/icons/nosound.png";
         }
     }
 }
