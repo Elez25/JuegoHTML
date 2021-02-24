@@ -65,6 +65,7 @@ var game={
     showLevelScreen:function(){
         $('.gamelayer').hide();
         $('#levelselectscreen').show('slow');
+		$('#selbutton').show('slow');
     },
 
     // Modo Juego 
@@ -455,13 +456,14 @@ var levels = {
 		var html = "";
 		for (var i=0; i < levels.data.length; i++) {
 			var level = levels.data[i];
-			html += '<input type="button" value="'+(i+1)+'">';
+			html +=   '<button>'+(i+1)+'<span></span><span></span><span></span><span</span></button>'
 		};
-		$('#levelselectscreen').html(html);
+		$('#selbutton').html(html);
 		
 		// Establecer los controladores de eventos de clic de botón para cargar el nivel
-		$('#levelselectscreen input').click(function(){
-			levels.load(this.value-1);
+		$('#selbutton button').click(function(){
+			var level = $(this).text();
+			levels.load(level-1);
 			$('#levelselectscreen').hide();
 		});
 	},
