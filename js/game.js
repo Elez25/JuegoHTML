@@ -404,27 +404,27 @@ var levels = {
     // Datos de nivel
 	data:[
         {   // Primer nivel 
-           foreground:'desert-foreground',
-           background:'clouds-background',
+           foreground:'front_decor_1',
+           background:'game_background_1',
            entities:[
                {type:"ground", name:"dirt", x:500,y:440,width:1000,height:20,isStatic:true},
                {type:"ground", name:"wood", x:185,y:390,width:30,height:80,isStatic:true},
    
                {type:"block", name:"wood", x:520,y:380,angle:90,width:100,height:25},
                {type:"block", name:"glass", x:520,y:280,angle:90,width:100,height:25},								
-               {type:"villain", name:"burger",x:520,y:205,calories:590},
+               {type:"villain", name:"black_knight",x:520,y:205,calories:590},
    
                {type:"block", name:"wood", x:620,y:380,angle:90,width:100,height:25},
                {type:"block", name:"glass", x:620,y:280,angle:90,width:100,height:25},								
-               {type:"villain", name:"burger",x:620,y:205,calories:590},				
+               {type:"villain", name:"black_knight",x:620,y:205,calories:590},				
    
-               {type:"hero", name:"orange",x:80,y:405},
-               {type:"hero", name:"orange",x:140,y:405},
+               {type:"hero", name:"roca",x:80,y:405},
+               {type:"hero", name:"roca_pinchos",x:140,y:405},
            ]
         },
            {   // Segundo nivel
-               foreground:'desert-foreground',
-               background:'clouds-background',
+			foreground:'front_decor_2',
+			background:'game_background_2',
                entities:[
                    {type:"ground", name:"dirt", x:500,y:440,width:1000,height:20,isStatic:true},
                    {type:"ground", name:"wood", x:185,y:390,width:30,height:80,isStatic:true},
@@ -439,13 +439,13 @@ var levels = {
                    {type:"block", name:"glass", x:770,y:255,angle:90,width:100,height:25},
                    {type:"block", name:"wood", x:720,y:192.5,width:100,height:25},	
    
-                   {type:"villain", name:"burger",x:715,y:155,calories:590},
-                   {type:"villain", name:"fries",x:670,y:405,calories:420},
-                   {type:"villain", name:"fries",x:765,y:400,calories:150},
+                   {type:"villain", name:"green_knight",x:715,y:155,calories:590},
+                   {type:"villain", name:"grey_knight",x:670,y:405,calories:420},
+                   {type:"villain", name:"grey_knight",x:765,y:400,calories:150},
    
-                   {type:"hero", name:"orange",x:30,y:415},
-                   {type:"hero", name:"orange",x:80,y:405},
-                   {type:"hero", name:"apple",x:140,y:405},
+                   {type:"hero", name:"roca",x:30,y:415},
+                   {type:"hero", name:"roca_pinchos",x:80,y:405},
+                   {type:"hero", name:"roca_lava",x:140,y:405},
                ]
            }
         ],
@@ -603,6 +603,7 @@ var mouse = {
 *******************/
 var entities = {
 	definitions:{
+		
         "glass":{
             fullHealth:100,
             density:2.4,
@@ -620,53 +621,93 @@ var entities = {
             friction:1.5,
             restitution:0.2,
         },
-        "burger":{
-            shape:"circle",
-            fullHealth:40,
-            radius:40,
-            density:1,
+        
+		
+        
+        
+		"roca":{
+			shape:"circle",
+			radius:25,
+            density:1.5,
             friction:0.5,
             restitution:0.4,
-        },
-        "sodacan":{
-            shape:"rectangle",
-            fullHealth:80,
-            width:40,
-            height:60,
-            density:1,
+		},
+		"roca_lava":{
+			shape:"circle",
+			radius:25,
+            density:1.5,
             friction:0.5,
-            restitution:0.7,
-        },
-        "fries":{
+            restitution:0.4,
+		},
+		"roca_cadena":{
+			shape:"circle",
+			radius:25,
+            density:1.5,
+            friction:0.5,
+            restitution:0.4,
+		},
+		"roca_pinchos":{
+			shape:"circle",
+			radius:25,
+            density:1.5,
+            friction:0.5,
+            restitution:0.4,
+		},
+		"black_knight":{
             shape:"rectangle",
             fullHealth:50,
-            width:40,
-            height:50,
+            width:60,
+            height:80,
             density:1,
             friction:0.5,
             restitution:0.6,
         },
-        "apple":{
-            shape:"circle",
-            radius:25,
-            density:1.5,
+		"silver_knight":{
+            shape:"rectangle",
+            fullHealth:50,
+            width:60,
+            height:80,
+            density:1,
             friction:0.5,
-            restitution:0.4,
+            restitution:0.6,
         },
-        "orange":{
-            shape:"circle",
-            radius:25,
-            density:1.5,
+		"bronze_knight":{
+            shape:"rectangle",
+            fullHealth:50,
+            width:60,
+            height:80,
+            density:1,
             friction:0.5,
-            restitution:0.4,
+            restitution:0.6,
         },
-        "strawberry":{
-            shape:"circle",
-            radius:15,
-            density:2.0,
+
+		"green_troll":{
+            shape:"rectangle",
+            fullHealth:50,
+            width:60,
+            height:80,
+            density:1,
             friction:0.5,
-            restitution:0.4,
-        }
+            restitution:0.6,
+        },
+		"brown_troll":{
+            shape:"rectangle",
+            fullHealth:50,
+            width:60,
+            height:80,
+            density:1,
+            friction:0.5,
+            restitution:0.6,
+        },
+		"grey_troll":{
+            shape:"rectangle",
+            fullHealth:50,
+            width:60,
+            height:80,
+            density:1,
+            friction:0.5,
+            restitution:0.6,
+        },
 	},
 	//Tomar la entidad, crear un cuerpo box2d y añadirlo al mundo
 	create:function(entity){
@@ -691,10 +732,17 @@ var entities = {
 				box2d.createRectangle(entity,definition);			   
 				break;	
 			case "hero":	// Círculos simples
+				entity.sprite = loader.loadImage("images/entities/Heroes/"+entity.name+".png");
+				entity.shape = definition.shape;
+				if(definition.shape == "circle"){
+					entity.radius = definition.radius;
+					box2d.createCircle(entity,definition);					
+				}
+				break;
 			case "villain": // Pueden ser círculos o rectángulos
 				entity.health = definition.fullHealth;
 				entity.fullHealth = definition.fullHealth;
-				entity.sprite = loader.loadImage("images/entities/"+entity.name+".png");
+				entity.sprite = loader.loadImage("images/entities/Villanos/"+entity.name+".png");
 				entity.shape = definition.shape;  
 				entity.bounceSound = game.bounceSound;
 				if(definition.shape == "circle"){
