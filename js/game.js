@@ -439,9 +439,9 @@ var levels = {
                    {type:"block", name:"glass", x:770,y:255,angle:90,width:100,height:25},
                    {type:"block", name:"wood", x:720,y:192.5,width:100,height:25},	
    
-                   {type:"villain", name:"green_knight",x:715,y:155,calories:590},
-                   {type:"villain", name:"grey_knight",x:670,y:405,calories:420},
-                   {type:"villain", name:"grey_knight",x:765,y:400,calories:150},
+                   {type:"villain", name:"black_knight",x:715,y:155,calories:590},
+                   {type:"villain", name:"bronze_knight",x:670,y:405,calories:420},
+                   {type:"villain", name:"bronze_knight",x:765,y:400,calories:150},
    
                    {type:"hero", name:"roca",x:30,y:415},
                    {type:"hero", name:"roca_pinchos",x:80,y:405},
