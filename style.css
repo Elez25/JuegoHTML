@@ -27,22 +27,6 @@
     cursor: pointer;
 }
 
-#levelselectscreen{
-    padding-top: 150px;
-    
-}
-
-#levelselectscreen input{
-    margin: 20px;
-    cursor: pointer;
-    background: url(images/icons/level.png);
-    color:yellow;
-    font-size: 20px;
-    width: 64px;
-    height: 64px;
-    border: 1px solid yellow;
-}
-
 #loadingscreen{
     background: rgba(100,100,100,0.3);
 }
@@ -63,9 +47,12 @@
 
 #scorescreen{
     height:60px;
-    font:32px Comic Sans MS;
-    text-shadow:  0 0 2px #000;
-    color:white;
+    font-family: 'Rubik', sans-serif;
+    font-size: 50px;
+    text-shadow:  0 0 10px black;
+    -webkit-text-fill-color: #F78900;
+    -webkit-text-stroke: 1px rgb(255, 255, 255);
+    -webkit-transform:scale(1.3);transform:scale(1.3);
 }
 
 #scorescreen img{
@@ -79,7 +66,7 @@
 #scorescreen #score{
     position:absolute;
     top:5px;
-    right:20px;
+    right:30px;
 }
 
 #endingscreen{
@@ -179,7 +166,7 @@
     color:#fff;
     font-size: 23px;
     letter-spacing: 3px;
-    font-family: 'Lato';
+    font-family: 'Rubik', sans-serif;
     font-weight: 600;
     outline: none;
     cursor: pointer;
@@ -279,4 +266,14 @@
 }
 .levelButton button:hover span{
     animation-play-state: paused;
+}
+
+h2{
+    font-family: 'Rubik', sans-serif;
+    font-size: 50px;
+    text-shadow:  0 0 10px black;
+    text-align: center;
+    -webkit-text-fill-color: #F78900;
+    -webkit-text-stroke: 1px rgb(255, 255, 255);
+    -webkit-transform:scale(1.3);transform:scale(1.3);
 }
