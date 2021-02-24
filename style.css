@@ -18,7 +18,7 @@
 
 /*Home Screen*/
 #gamestartscreen{
-    padding-top: 250px;
+    padding-top: 180px;
     text-align: center;
 }
 
@@ -29,7 +29,7 @@
 
 #levelselectscreen{
     padding-top: 150px;
-    padding-left: 50px;
+    
 }
 
 #levelselectscreen input{
@@ -45,6 +45,11 @@
 
 #loadingscreen{
     background: rgba(100,100,100,0.3);
+}
+
+#selbutton{
+    display: flex;
+    justify-content: space-around;
 }
 
 #loadingmessage{
