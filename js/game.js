@@ -310,17 +310,21 @@ var game={
 	},
 
     showEndingScreen:function(){
+		var endingmessage = document.getElementById('endingmessage');
         game.stopBackgroundMusic();				
         if (game.mode=="level-success"){			
             if(game.currentLevel.number<levels.data.length-1){
-                $('#endingmessage').html('Level Complete. Well Done!!!');
+                $('#endingmessage').html('LEVEL COMPLETE');
+				endingmessage.style.cssText= '-webkit-text-fill-color: #93FF33;';
                 $("#playnextlevel").show();
             } else {
-                $('#endingmessage').html('All Levels Complete. Well Done!!!');
+                $('#endingmessage').html('ALL LEVELS COMPLETE!!!');
+				endingmessage.style.cssText= '-webkit-text-fill-color: #93FF33;';
                 $("#playnextlevel").hide();
             }
         } else if (game.mode=="level-failure"){			
-            $('#endingmessage').html('Failed. Play Again?');
+            $('#endingmessage').html('LEVEL FAILED');
+			endingmessage.style.cssText= '-webkit-text-fill-color: #FA0F08;';
             $("#playnextlevel").hide();
         }		
 
