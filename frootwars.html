@@ -15,7 +15,6 @@
         <canvas id="gamecanvas" width="640" height="480" class="gamelayer"></canvas>
         <div id="scorescreen" class="gamelayer">
             <img id="togglemusic" src="images/icons/nosound.png" onclick="game.toggleBackgroundMusic();">
-            <img src="images/icons/prev.png" onclick="game.restartLevel();">
             <span id="score">Score: 0</span>
         </div>
 
@@ -38,11 +37,13 @@
         </div>
 
         <div id="endingscreen" class="gamelayer">
-            <div>
-                <p id="endingmessage">The level is over message</p>
-                <p id="playcurrentlevel" onclick="game.restartLevel();"><img src="images/icons/prev.png" alt="">Replay Current level</p>
-                <p id="playnextlevel" onclick="game.startNextLevel();"><img src="images/icons/next.png" alt="">Play Next level</p>
-                <p id="showlevelscreen" onclick="game.showLevelScreen();"><img src="images/icons/return.png" alt="">Return to level screen</p>
+            <div class="menuButton">
+                <h2 id="endingmessage">The level is over message</h2>
+                  <a onclick="game.startNextLevel();">START</a>
+                  <br>
+                  <a onclick="game.showLevelScreen();">RESTART</a>
+                  <br>
+                  <a onclick="game.showLevelScreen();">MORE LEVELS</a>
             </div>
         </div>
     </div>
