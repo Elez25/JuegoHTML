@@ -351,7 +351,7 @@ h4{
     border-radius: 5px;
 }
 
-/*OPTIONS*/
+/*SETTINGS*/
 [type="checkbox"]:checked,
 [type="checkbox"]:not(:checked),
 [type="radio"]:checked,
@@ -370,7 +370,7 @@ h4{
 	padding: 0;
 	padding-top: 10px;
 	padding-bottom: 10px;
-	width: 150px;
+	width: 160px;
 	font-size: 32px;
     font-family: 'Rubik', sans-serif;
 	line-height: 20px;
