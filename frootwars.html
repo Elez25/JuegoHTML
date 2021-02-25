@@ -22,14 +22,62 @@
                 <div class="menuButton">
                   <a onclick="game.showLevelScreen();">START</a>
                   <br>
-                  <a href="#">SETTINGS</a>
+                  <a onclick="game.showSettings();">SETTINGS</a>
                 </div>
         </div>
-            <div id="levelselectscreen" class="gamelayer">
-                <h2 id="levels">LEVELS</h2>
-                <div id="selbutton" class="levelButton">
-                </div>
+
+        <div id="settingscreen" class="gamelayer">
+            <span class="backButton">
+                <a onclick="game.showMenuSettings();">BACK</a>
+            </span>
+            <h3 id="settings">SETTINGS</h3>
+            <div>
+                <h4>BOW COLOR</h4>
+                <input class="checkbox-budget" type="radio" name="budget" id="budget-1" checked>
+                    <label class="for-checkbox-budget" for="budget-1">
+                        <span data-hover="PURPLE">PURPLE</span>
+                    </label>
+                <input class="checkbox-budget" type="radio" name="budget" id="budget-2">
+                        <label class="for-checkbox-budget" for="budget-2">
+                            <span data-hover="BLUE">BLUE</span>
+                        </label>
+                <input class="checkbox-budget" type="radio" name="budget" id="budget-3">
+                        <label class="for-checkbox-budget" for="budget-3">
+                            <span data-hover="WHITE">WHITE</span>
+                        </label>
+                <h4>AUDIO</h4>
+                <input class="checkbox-budget" type="radio" name="budget2" id="budget-7" checked>
+                    <label class="for-checkbox-budget" for="budget-7">
+                        <span data-hover="DESERT">DESERT</span>
+                    </label>
+                <input class="checkbox-budget" type="radio" name="budget2" id="budget-8">
+                        <label class="for-checkbox-budget" for="budget-8">
+                            <span data-hover="GROUND">GROUND</span>
+                        </label>
+                <input class="checkbox-budget" type="radio" name="budget2" id="budget-9">
+                        <label class="for-checkbox-budget" for="budget-9">
+                            <span data-hover="CASTLE">CASTLE</span>
+                        </label>
+                <h4>ENEMY</h4>
+                <input class="checkbox-budget" type="radio" name="budget3" id="budget-10" checked>
+                    <label class="for-checkbox-budget" for="budget-10">
+                        <span data-hover="KNIGHTS">KNIGHTS</span>
+                    </label>
+                <input class="checkbox-budget" type="radio" name="budget3" id="budget-11">
+                        <label class="for-checkbox-budget" for="budget-11">
+                            <span data-hover="TROLLS">TROLLS</span>
+                        </label>
             </div>
+         </div>
+
+        <div id="levelselectscreen" class="gamelayer">
+            <span class="backButton">
+                <a onclick="game.showMenu();">BACK</a>
+            </span>
+                <h2 id="levels">LEVELS</h2>
+            <div id="selbutton" class="levelButton">
+            </div>
+         </div>
 
 
         <div id="loadingscreen" class="gamelayer">

@@ -68,6 +68,21 @@ var game={
 		$('#selbutton').show('slow');
     },
 
+	showMenu:function(){
+		$('#levelselectscreen').hide();
+        $('#gamestartscreen').show('slow');
+	},
+	
+	showMenuSettings:function(){
+		$('#settingscreen').hide();
+        $('#gamestartscreen').show('slow');
+	},
+
+	showSettings(){
+        $('.gamelayer').hide();
+        $('#settingscreen').show('slow');
+	},
+
     // Modo Juego 
 	mode:"intro", 
 	// Coordenadas X & Y de la honda
@@ -397,7 +412,7 @@ var game={
 			game.backgroundMusic.pause();	
 			$("#togglemusic")[0].src="images/icons/nosound.png";
 		}
-	},
+	}
 }
 
 /*****************
