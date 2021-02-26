@@ -338,10 +338,13 @@ var game={
 				totalLevels[game.currentLevel.number] = this.score*multiplicador;
 				$('#recordmessage').text('NEW RECORD!');
 			}
+			else{
+				$('#recordmessage').text('');
+			}
 			$('#heroes').text('REMAINING HEROES: ');
 			$('#spanheroes').text(heroesLeft);
 			$('#actualscore').text('LEVEL SCORE: ');
-			$('#spanscore').text(this.score+' X '+multiplicador+' = '+totalLevels[game.currentLevel.number]);
+			$('#spanscore').text(this.score+' X '+multiplicador+' = '+this.score*multiplicador);
 			console.log(totalLevels);
 			var total=0;
 			for(var i=0;i<totalLevels.length;i++){
