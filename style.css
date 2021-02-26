@@ -86,7 +86,9 @@
     text-align: center;
 }
 
-
+#levelselectscreen h3{
+    margin-top: 12%;
+}
 
 #endingscreen h2{
     font-family: 'Rubik', sans-serif;
