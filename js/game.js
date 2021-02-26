@@ -31,6 +31,7 @@ $(window).load(function(){
     
 });
 
+var totalLevels;
 /*****************
 ***OBJETO JUEGO***
 ******************/
@@ -301,7 +302,7 @@ var game={
 				if(entityX<0|| entityX>game.currentLevel.foregroundImage.width||(entity.health && entity.health <0)){
 					box2d.world.DestroyBody(body);
 					if (entity.type=="villain"){
-						game.score += entity.calories;
+						game.score += (entity.calories)
 						$('#score').html('Score: '+game.score);
 					}
 					if (entity.breakSound){
@@ -327,14 +328,36 @@ var game={
     showEndingScreen:function(){
 		var endingmessage = document.getElementById('endingmessage');
         game.stopBackgroundMusic();				
-        if (game.mode=="level-success"){			
+        if (game.mode=="level-success"){
+			var heroesLeft = game.heroes.length;
+			console.log(heroesLeft);
+
+			var multiplicador = heroesLeft+1;
+			console.log(multiplicador);
+			if(totalLevels[game.currentLevel.number]<this.score*multiplicador){
+				totalLevels[game.currentLevel.number] = this.score*multiplicador;
+				$('#recordmessage').text('NEW RECORD!');
+			}
+			$('#heroes').text('REMAINING HEROES: ');
+			$('#spanheroes').text(heroesLeft);
+			$('#actualscore').text('LEVEL SCORE: ');
+			$('#spanscore').text(this.score+' X '+multiplicador+' = '+totalLevels[game.currentLevel.number]);
+			console.log(totalLevels);
+			var total=0;
+			for(var i=0;i<totalLevels.length;i++){
+				total=total+totalLevels[i];
+			}
+			$('#totalscore').text('TOTAL GAME SCORE: ');
+			$('#spantotal').text(total);
+			endingmessage.style.cssText= '-webkit-text-fill-color: #93FF33;';
+
             if(game.currentLevel.number<levels.data.length-1){
+
                 $('#endingmessage').html('LEVEL COMPLETE');
-				endingmessage.style.cssText= '-webkit-text-fill-color: #93FF33;';
                 $("#playnextlevel").show();
+				
             } else {
                 $('#endingmessage').html('ALL LEVELS COMPLETE!!!');
-				endingmessage.style.cssText= '-webkit-text-fill-color: #93FF33;';
                 $("#playnextlevel").hide();
             }
         } else if (game.mode=="level-failure"){			
@@ -421,7 +444,7 @@ var game={
 /*El objeto levels tiene un array con información acerca 
 de cada nivel */
 var levels = {
-    // Datos de nivel
+	 // Datos de nivel
 	data:[
         {   // Primer nivel 
            foreground:'front_decor_1',
@@ -473,10 +496,14 @@ var levels = {
         // Inicializar pantalla de selección de nivel
 	init:function(){
 		var html = "";
+		totalLevels=new Array(levels.data.length);
 		for (var i=0; i < levels.data.length; i++) {
 			var level = levels.data[i];
 			html +=   '<button>'+(i+1)+'<span></span><span></span><span></span><span</span></button>'
-		};
+			//Inicializamos el maximo score de cada nivel
+			totalLevels[i] = 0;
+		}
+		
 		$('#selbutton').html(html);
 		
 		// Establecer los controladores de eventos de clic de botón para cargar el nivel
