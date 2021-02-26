@@ -32,6 +32,7 @@ $(window).load(function(){
 });
 
 var totalLevels;
+var typeVillain="1";
 /*****************
 ***OBJETO JUEGO***
 ******************/
@@ -43,8 +44,8 @@ var game={
 		mouse.init();
 
 		// Cargar todos los efectos de sonido y música de fondo
-	    //"Kindergarten" by Gurdonark
-		game.backgroundMusic = loader.loadSound('audio/gurdonark-kindergarten');
+
+		game.backgroundMusic = loader.loadSound('audio/medieval');
 
 		game.slingshotReleasedSound = loader.loadSound("audio/released");
 		game.bounceSound = loader.loadSound('audio/bounce');
@@ -67,6 +68,7 @@ var game={
         $('.gamelayer').hide();
         $('#levelselectscreen').show('slow');
 		$('#selbutton').show('slow');
+		game.stopBackgroundMusic();	
     },
 
 	showMenu:function(){
@@ -77,6 +79,13 @@ var game={
 	showMenuSettings:function(){
 		$('#settingscreen').hide();
         $('#gamestartscreen').show('slow');
+	},
+	saveSettings:function(){
+		$('#settingscreen').hide();
+        $('#gamestartscreen').show('slow');
+		var song=$('input[name=audio]:checked', '#audioform').val();
+		typeVillain=$('input[name=villain]:checked', '#villainform').val();
+		game.backgroundMusic = loader.loadSound('audio/'+song);
 	},
 
 	showSettings(){
@@ -327,13 +336,13 @@ var game={
 
     showEndingScreen:function(){
 		var endingmessage = document.getElementById('endingmessage');
-        game.stopBackgroundMusic();				
+        game.stopBackgroundMusic();	
+		$('#backrestart').hide();	
+		$('#restart').hide();			
         if (game.mode=="level-success"){
 			var heroesLeft = game.heroes.length;
-			console.log(heroesLeft);
 
 			var multiplicador = heroesLeft+1;
-			console.log(multiplicador);
 			if(totalLevels[game.currentLevel.number]<this.score*multiplicador){
 				totalLevels[game.currentLevel.number] = this.score*multiplicador;
 				$('#recordmessage').text('NEW RECORD!');
@@ -345,7 +354,6 @@ var game={
 			$('#spanheroes').text(heroesLeft);
 			$('#actualscore').text('LEVEL SCORE: ');
 			$('#spanscore').text(this.score+' X '+multiplicador+' = '+this.score*multiplicador);
-			console.log(totalLevels);
 			var total=0;
 			for(var i=0;i<totalLevels.length;i++){
 				total=total+totalLevels[i];
@@ -420,11 +428,15 @@ var game={
 		window.cancelAnimationFrame(game.animationFrame);		
 		game.lastUpdateTime = undefined;
 		levels.load(game.currentLevel.number);
+		$('#backrestart').show();
+		$('#restart').show();	
 	},
 	startNextLevel:function(){
 		window.cancelAnimationFrame(game.animationFrame);		
 		game.lastUpdateTime = undefined;
 		levels.load(game.currentLevel.number+1);
+		$('#backrestart').show();
+		$('#restart').show();
 	},
 
     startBackgroundMusic:function(){
@@ -523,6 +535,8 @@ var levels = {
 			var level = $(this).text();
 			levels.load(level-1);
 			$('#levelselectscreen').hide();
+			$('#backrestart').show();
+			$('#restart').show();
 		});
 	},
 
@@ -705,10 +719,6 @@ var entities = {
             friction:1.5,
             restitution:0.2,
         },
-        
-		
-        
-        
 		"roca":{
 			shape:"circle",
 			radius:25,
@@ -734,7 +744,7 @@ var entities = {
 			shape:"circle",
 			radius:25,
             density:1.5,
-            friction:0.5,
+            friction:1.2,
             restitution:0.4,
 		},
 		"black_knight":{
@@ -756,34 +766,6 @@ var entities = {
             restitution:0.6,
         },
 		"bronze_knight":{
-            shape:"rectangle",
-            fullHealth:50,
-            width:60,
-            height:80,
-            density:1,
-            friction:0.5,
-            restitution:0.6,
-        },
-
-		"green_troll":{
-            shape:"rectangle",
-            fullHealth:50,
-            width:60,
-            height:80,
-            density:1,
-            friction:0.5,
-            restitution:0.6,
-        },
-		"brown_troll":{
-            shape:"rectangle",
-            fullHealth:50,
-            width:60,
-            height:80,
-            density:1,
-            friction:0.5,
-            restitution:0.6,
-        },
-		"grey_troll":{
             shape:"rectangle",
             fullHealth:50,
             width:60,
@@ -826,7 +808,7 @@ var entities = {
 			case "villain": // Pueden ser círculos o rectángulos
 				entity.health = definition.fullHealth;
 				entity.fullHealth = definition.fullHealth;
-				entity.sprite = loader.loadImage("images/entities/Villanos/"+entity.name+".png");
+				entity.sprite = loader.loadImage("images/entities/Villanos/"+entity.name+typeVillain+".png");
 				entity.shape = definition.shape;  
 				entity.bounceSound = game.bounceSound;
 				if(definition.shape == "circle"){

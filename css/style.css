@@ -2,7 +2,7 @@
 #gamecontainer{
     width: 640px;
     height: 480px;
-    background: url(images/splashscreen.png);
+    background: url(../images/splashscreen.png);
     border: 5px solid#F78900;
     margin: 0 auto;
 }
@@ -40,14 +40,13 @@
     text-align: center;
     height: 48px;
     color:white;
-    background: url(images/loader.gif) no-repeat center;
+    background: url(../images/loader.gif) no-repeat center;
     font:12px Arial;
 }
 
 #togglemusic{
     cursor: pointer;
-    margin-left: 5px;
-    margin-top: 2px; 
+    margin-top: 20px;
     user-select: none;
     -moz-user-select: none;
     -webkit-user-drag: none;
@@ -65,18 +64,17 @@
     font-family: 'Rubik', sans-serif;
     font-size: 38px;
     text-shadow:  0 0 10px black;
-    -webkit-text-fill-color: #F78900;
-    -webkit-text-stroke: 1px rgb(255, 255, 255);
 }
 
 #scorescreen img{
-    height:60px;
-    font:32px Comic Sans MS;
+    height: 60px;
     text-shadow:  0 0 2px #000;
     color:white;
 }
 
 #scorescreen #score{
+    -webkit-text-fill-color: #F78900;
+    -webkit-text-stroke: 1px rgb(255, 255, 255);
     position:absolute;
     top:5px;
     right:20px;
@@ -84,6 +82,7 @@
 
 #endingscreen{
     text-align: center;
+    margin-top: 2%;
 }
 
 #levelselectscreen h3{
@@ -109,7 +108,6 @@
 .menuButton{
     position:relative;
     display:inline-block;
-    margin-top: 10%;
   }
   
 .menuButton a{
@@ -349,7 +347,7 @@ h4 {
 
 #resultcontainer p{
     font-family: 'Rubik', sans-serif;
-    font-size: 15px;
+    font-size: 22px;
     text-shadow:  0 0 10px black;
     text-align: center;
     -webkit-text-fill-color: #F78900;
@@ -366,7 +364,7 @@ h4 {
 
 #resultcontainer h5{
     font-family: 'Rubik', sans-serif;
-    font-size: 13px;
+    font-size: 25px;
     text-shadow:  0 0 10px black;
     text-align: center;
     -webkit-text-fill-color: #3cd31e;
@@ -460,9 +458,67 @@ a{
     border-radius: 5px;
 }
 
+/*Boton reset level*/
+.resetButton{
+    position:relative;
+    display:inline-block;
+  }
+  
+.resetButton a{
+    cursor: pointer;
+    color:white;
+    font-family: 'Rubik', sans-serif;
+    font-weight: bold;
+    font-size:16px;
+    text-align: center;
+    text-decoration:none;
+    background-color:#FFA12B;
+    display:block;
+    padding:7px 7px;
+    
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    text-shadow: 0px 1px 0px #000;
+    filter: dropshadow(color=#000, offx=0px, offy=1px);
+    
+    -webkit-box-shadow:inset 0 1px 0 #FFE5C4, 0 10px 0 #915100;
+    -moz-box-shadow:inset 0 1px 0 #FFE5C4, 0 10px 0 #915100;
+    box-shadow:inset 0 1px 0 #FFE5C4, 0 10px 0 #915100;
+    
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+  
+.resetButton a:active{
+    top:10px;
+    background-color:#F78900;
+    
+    -webkit-box-shadow:inset 0 1px 0 #FFE5C4, inset 0 -3px 0 #915100;
+    -moz-box-shadow:inset 0 1px 0 #FFE5C4, inset 0 -3pxpx 0 #915100;
+    box-shadow:inset 0 1px 0 #FFE5C4, inset 0 -3px 0 #915100;
+}
+  
+.resetButton:after{
+    content:"";
+    height:100%;
+    width:100%;
+    padding:4px;
+    position: absolute;
+    bottom:-15px;
+    left:-4px;
+    z-index:-1;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
 #cabeceraSettings {
     display: flex;
     flex-direction: row;
+}
+
+#settings{
+    margin-top: 12%;
 }
 
 
@@ -485,7 +541,7 @@ a{
 	padding: 0;
 	padding-top: 10px;
 	padding-bottom: 10px;
-	width: 160px;
+	width: 180px;
 	font-size: 32px;
     font-family: 'Rubik', sans-serif;
 	line-height: 20px;
@@ -558,7 +614,7 @@ a{
 	max-height: 100%;
 }
 
-#bowColor, #audio, #enemy{
+#bowColor, #audio, #villain{
     display: flex;
     justify-content: space-around;
 }

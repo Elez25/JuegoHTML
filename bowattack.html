@@ -4,17 +4,23 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Froot wars</title>
+    <title>Bow Attack</title>
     <script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/Box2dWeb-2.1.a.3.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/game.js" type="text/javascript" charset="utf-8"></script>
-    <link rel="stylesheet" href="style.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8">
 </head>
 <body>
     <div id="gamecontainer">
         <canvas id="gamecanvas" width="640" height="480" class="gamelayer"></canvas>
         <div id="scorescreen" class="gamelayer">
             <img id="togglemusic" src="images/icons/nosound.png" onclick="game.toggleBackgroundMusic();">
+            <span id="backrestart" class="resetButton">
+                <a onclick="game.showLevelScreen();" >BACK</a>
+            </span>
+            <span id="restart" class="resetButton">
+                <a onclick="game.restartLevel();">RESET</a>
+            </span>
             <span id="score">Score: 0</span>
         </div>
 
@@ -28,11 +34,10 @@
 
         <div id="settingscreen" class="gamelayer">
             <div id="cabeceraSettings"><span class="backButton">
-                <a onclick="game.showMenuSettings();">BACK</a>
+                <a onclick="game.saveSettings();">SAVE</a>
             </span>
             <h3 id="settings">SETTINGS</h3>
             </div>
-            <div id = "setingsOptions">
                 <h4>BOW COLOR</h4>
                 <div id="bowColor">
                 <input class="checkbox-budget" type="radio" name="budget" id="budget-1" checked>
@@ -48,33 +53,36 @@
                             <span data-hover="WHITE">WHITE</span>
                         </label>
                 </div>
-                <h4>AUDIO</h4>
+                <h4>SOUNDTRACK</h4>
                 <div id="audio">
-                <input class="checkbox-budget" type="radio" name="budget2" id="budget-7" checked>
+                <form id="audioform">
+                <input name="audio" class="checkbox-budget" value="medieval" type="radio" id="budget-7" checked>
                     <label class="for-checkbox-budget" for="budget-7">
-                        <span data-hover="DESERT">DESERT</span>
+                        <span data-hover="MEDIEVAL">MEDIEVAL</span>
                     </label>
-                <input class="checkbox-budget" type="radio" name="budget2" id="budget-8">
+                <input name="audio" class="checkbox-budget" type="radio"  value="preparo" id="budget-8">
                         <label class="for-checkbox-budget" for="budget-8">
-                            <span data-hover="GROUND">GROUND</span>
+                            <span data-hover="EPIC">EPIC</span>
                         </label>
-                <input class="checkbox-budget" type="radio" name="budget2" id="budget-9">
+                <input name="audio" class="checkbox-budget" type="radio" value="fire" id="budget-9">
                         <label class="for-checkbox-budget" for="budget-9">
-                            <span data-hover="CASTLE">CASTLE</span>
+                            <span data-hover="FIRE">FIRE</span>
                         </label>
+                </form>
                 </div>
-                <h4>ENEMY</h4>
-                <div id="enemy">
-                <input class="checkbox-budget" type="radio" name="budget3" id="budget-10" checked>
+                <h4>VILLAIN</h4>
+                <form id="villainform">
+                <div id="villain">
+                <input class="checkbox-budget" name="villain" value="1" type="radio" id="budget-10" checked>
                     <label class="for-checkbox-budget" for="budget-10">
                         <span data-hover="KNIGHTS">KNIGHTS</span>
                     </label>
-                <input class="checkbox-budget" type="radio" name="budget3" id="budget-11">
+                <input class="checkbox-budget" name="villain" value="2" type="radio" name="budget3" id="budget-11">
                         <label class="for-checkbox-budget" for="budget-11">
                             <span data-hover="TROLLS">TROLLS</span>
                         </label>
                 </div>
-            </div>
+                </form>
          </div>
 
         <div id="levelselectscreen" class="gamelayer">
@@ -105,7 +113,7 @@
                 
                   <div id="resultcontainer">
                     <div id="resultResumen">
-                        <h5 id="heroes"></h5><p id="spanheroes">HOLA</p><br>
+                        <h5 id="heroes"></h5><p id="spanheroes"></p><br>
         
                         <h5 id="actualscore"></h5><p id="spanscore"></p> <br>
         
