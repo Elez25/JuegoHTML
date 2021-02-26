@@ -363,7 +363,16 @@ var game={
         } else if (game.mode=="level-failure"){			
             $('#endingmessage').html('LEVEL FAILED');
 			endingmessage.style.cssText= '-webkit-text-fill-color: #FA0F08;';
-            $("#playnextlevel").hide();
+            $("#recordmessage").text('');
+			$('#heroes').text('');
+			$('#spanheroes').text('');
+			$('#actualscore').text('');
+			$('#spanscore').text('');
+			$('#totalscore').text('');
+			$('#spantotal').text('');
+			if(game.currentLevel.number==levels.data.length-1){
+				$("#playnextlevel").hide();
+			}
         }		
 
         $('#endingscreen').show();
