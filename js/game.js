@@ -518,7 +518,114 @@ var levels = {
                    {type:"hero", name:"roca_pinchos",x:80,y:405},
                    {type:"hero", name:"roca_lava",x:140,y:405},
                ]
-           }
+           },
+
+		   {   // Tercer nivel
+			foreground:'front_decor_2',
+			background:'game_background_2',
+               entities:[
+				{type:"ground", name:"dirt", x:500,y:440,width:1000,height:20,isStatic:true},
+                {type:"ground", name:"wood", x:185,y:390,width:30,height:80,isStatic:true},
+				
+				{type:"block", name:"wood", x:820,y:380,angle:90,width:100,height:25},
+				{type:"block", name:"wood", x:720,y:380,angle:90,width:100,height:25},
+				{type:"block", name:"wood", x:920,y:380,angle:90,width:100,height:25},
+				{type:"block", name:"glass", x:770,y:317.5,width:100,height:25},
+				{type:"block", name:"glass", x:870,y:317.5,width:100,height:25},
+
+				{type:"block", name:"glass", x:720,y:255,angle:90,width:100,height:25},
+                {type:"block", name:"glass", x:820,y:255,angle:90,width:100,height:25},
+				{type:"block", name:"glass", x:920,y:255,angle:90,width:100,height:25},
+                {type:"block", name:"wood", x:770,y:192.5,width:100,height:25},
+				{type:"block", name:"wood", x:870,y:192.5,width:100,height:25},
+
+				//Villano tercer piso
+				{type:"villain", name:"black_knight",x:830,y:155,calories:590},
+				//Villanos segundo piso
+				{type:"villain", name:"black_knight",x:750,y:260,calories:590},
+				{type:"villain", name:"black_knight",x:850,y:260,calories:590},
+				//villano primer piso
+				{type:"villain", name:"bronze_knight",x:855,y:400,calories:150},
+				{type:"villain", name:"bronze_knight",x:755,y:400,calories:150},
+
+
+				{type:"hero", name:"roca",x:30,y:415},
+                {type:"hero", name:"roca_pinchos",x:80,y:405},
+                {type:"hero", name:"roca_lava",x:140,y:405},
+
+			   ]
+		   },
+
+		   {   // Cuarto Nivel nivel
+			foreground:'front_decor_2',
+			background:'game_background_2',
+               entities:[
+                   {type:"ground", name:"dirt", x:500,y:440,width:1000,height:20,isStatic:true},
+                   {type:"ground", name:"wood", x:185,y:390,width:30,height:80,isStatic:true},
+       
+                   {type:"block", name:"wood", x:820,y:380,angle:90,width:100,height:25},
+                   {type:"block", name:"wood", x:720,y:380,angle:90,width:100,height:25},
+                   {type:"block", name:"wood", x:620,y:380,angle:90,width:100,height:25},
+				   {type:"block", name:"wood", x:920,y:380,angle:90,width:100,height:25},
+                   {type:"block", name:"glass", x:670,y:317.5,width:100,height:25},
+                   {type:"block", name:"glass", x:770,y:317.5,width:100,height:25},
+				   {type:"block", name:"glass", x:870,y:317.5,width:100,height:25},				
+   
+                   {type:"block", name:"glass", x:670,y:255,angle:90,width:100,height:25},
+                   {type:"block", name:"glass", x:770,y:255,angle:90,width:100,height:25},
+				   {type:"block", name:"glass", x:870,y:255,angle:90,width:100,height:25},
+                   {type:"block", name:"wood", x:720,y:192.5,width:100,height:25},
+				   {type:"block", name:"wood", x:820,y:192.5,width:100,height:25},
+				   
+				   {type:"block", name:"wood", x:740,y:140,angle:90,width:100,height:25},
+				   {type:"block", name:"wood", x:830,y:140,angle:90,width:100,height:25},
+				   {type:"block", name:"wood", x:775,y:77,width:100,height:25},
+   
+                   {type:"villain", name:"black_knight",x:765,y:155,calories:590},
+				   {type:"villain", name:"black_knight",x:700,y:260,calories:590},
+				   {type:"villain", name:"black_knight",x:800,y:260,calories:590},
+                   {type:"villain", name:"bronze_knight",x:670,y:405,calories:420},
+                   {type:"villain", name:"bronze_knight",x:865,y:400,calories:150},
+   
+                   {type:"hero", name:"roca",x:30,y:415},
+                   {type:"hero", name:"roca_pinchos",x:80,y:405},
+                   {type:"hero", name:"roca_lava",x:140,y:405},
+               ]
+           },
+
+		   
+
+		   {   // Quinto nivel
+			foreground:'front_decor_2',
+			background:'game_background_2',
+               entities:[
+				{type:"ground", name:"dirt", x:500,y:440,width:1000,height:20,isStatic:true},
+                {type:"ground", name:"wood", x:185,y:390,width:30,height:80,isStatic:true},
+
+				{type:"ground", name:"dirt", x:500,y:440,width:1000,height:20,isStatic:true},
+                   {type:"ground", name:"wood", x:185,y:390,width:30,height:80,isStatic:true},
+       
+                   
+                   {type:"block", name:"wood", x:720,y:380,angle:90,width:100,height:25},
+                   {type:"block", name:"wood", x:620,y:380,angle:90,width:100,height:25},
+				   
+                   {type:"block", name:"glass", x:670,y:317.5,width:100,height:25},
+                   				
+   
+                   {type:"block", name:"glass", x:620,y:255,angle:90,width:100,height:25},
+                   {type:"block", name:"glass", x:720,y:255,angle:90,width:100,height:25},
+                   {type:"block", name:"wood", x:670,y:192.5,width:100,height:25},
+				   
+				   
+				   {type:"block", name:"wood", x:740,y:140,angle:90,width:100,height:25},
+				   {type:"block", name:"wood", x:830,y:140,angle:90,width:100,height:25},
+				   {type:"block", name:"wood", x:775,y:77,width:100,height:25},
+
+				{type:"hero", name:"roca",x:30,y:415},
+				{type:"hero", name:"roca_pinchos",x:80,y:405},
+				{type:"hero", name:"roca_lava",x:140,y:405},
+			   ]
+		   },
         ],
 
         // Inicializar pantalla de selección de nivel
@@ -778,6 +885,15 @@ var entities = {
             friction:0.5,
             restitution:0.6,
         },
+		"boss":{
+			shape:"rectangle",
+            fullHealth:250,
+            width:60,
+            height:80,
+            density:1,
+            friction:0.5,
+            restitution:0.6,
+		}
 	},
 	//Tomar la entidad, crear un cuerpo box2d y añadirlo al mundo
 	create:function(entity){
@@ -822,6 +938,11 @@ var entities = {
 					entity.width = definition.width;
 					entity.height = definition.height;
 					box2d.createRectangle(entity,definition);					
+				}
+				else if(definition.shape == "rectangle2"){
+					entity.width = definition.width;
+					entity.height = definition.height;
+					box2d.createRectangle2(entity,definition);					
 				}												 
 				break;							
 			default:
@@ -840,6 +961,10 @@ var entities = {
 						-entity.width/2-1,-entity.height/2-1,entity.width+2,entity.height+2);	
 			break;
 			case "villain":
+				if (entity.shape=="rectangle2"){
+					game.context.drawImage(entity.sprite,0,0,entity.sprite.width,entity.sprite.height,
+							-entity.width/2-1,-entity.height/2-1,entity.width+2,entity.height+2);
+				}
 			case "hero": 
 				if (entity.shape=="circle"){
 					game.context.drawImage(entity.sprite,0,0,entity.sprite.width,entity.sprite.height,
@@ -950,6 +1075,35 @@ var box2d = {
         
         var fixture = body.CreateFixture(fixtureDef);
         return body;
+},
+
+createRectangle2:function(entity,definition){
+	var bodyDef = new b2BodyDef;
+	if(entity.isStatic){
+		bodyDef.type = b2Body.b2_staticBody;
+	} else {
+		bodyDef.type = b2Body.b2_dynamicBody;
+	}
+	
+	bodyDef.position.x = entity.x/box2d.scale;
+	bodyDef.position.y = entity.y/box2d.scale;
+	if (entity.angle) {
+		bodyDef.angle = Math.PI*entity.angle/180;
+	}
+	
+	var fixtureDef = new b2FixtureDef;
+	fixtureDef.density = definition.density;
+	fixtureDef.friction = definition.friction;
+	fixtureDef.restitution = definition.restitution;
+
+	fixtureDef.shape = new b2PolygonShape;
+	fixtureDef.shape.SetAsBox(entity.width/1.5/box2d.scale,entity.height/1.5/box2d.scale);
+	
+	var body = box2d.world.CreateBody(bodyDef);	
+	body.SetUserData(entity);
+	
+	var fixture = body.CreateFixture(fixtureDef);
+	return body;
 },
 
 createCircle:function(entity,definition){
