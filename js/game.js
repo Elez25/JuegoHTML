@@ -33,6 +33,7 @@ $(window).load(function(){
 
 var totalLevels;
 var typeVillain="1";
+var typebow="#F9B4FF";
 /*****************
 ***OBJETO JUEGO***
 ******************/
@@ -47,7 +48,7 @@ var game={
 
 		game.backgroundMusic = loader.loadSound('audio/medieval');
 
-		game.slingshotReleasedSound = loader.loadSound("audio/released");
+		game.bowReleasedSound = loader.loadSound("audio/released");
 		game.bounceSound = loader.loadSound('audio/bounce');
 		game.breakSound = {
 			"glass":loader.loadSound('audio/glassbreak'),
@@ -86,8 +87,9 @@ var game={
 		$('#settingscreen').hide();
         $('#gamestartscreen').show('slow');
 		var song=$('input[name=audio]:checked', '#audioform').val();
-		typeVillain=$('input[name=villain]:checked', '#villainform').val();
 		game.backgroundMusic = loader.loadSound('audio/'+song);
+		typeVillain=$('input[name=villain]:checked', '#villainform').val();
+		typebow=$('input[name=bow]:checked', '#bowform').val();
 	},
 
 	showSettings(){
@@ -98,8 +100,8 @@ var game={
     // Modo Juego 
 	mode:"intro", 
 	// Coordenadas X & Y de la honda
-	slingshotX:160,
-	slingshotY:280,
+	bowX:160,
+	bowY:265,
 
     start:function(){
 		$('.gamelayer').hide();
@@ -176,23 +178,23 @@ var game={
                  game.panTo(mouse.x + game.offsetLeft)
              }
          } else {
-             game.panTo(game.slingshotX);
+             game.panTo(game.bowX);
          }
      }
 
      if (game.mode == "firing"){  
          if(mouse.down){
-             game.panTo(game.slingshotX);				
+             game.panTo(game.bowX);				
              game.currentHero.SetPosition({x:(mouse.x+game.offsetLeft)/box2d.scale,y:mouse.y/box2d.scale});
          } else {
              game.mode = "fired";
-             game.slingshotReleasedSound.play();								
+             game.bowReleasedSound.play();								
              var impulseScaleFactor = 0.75;
              
              // Coordenadas del centro de la honda (donde la banda está atada a la honda)
-             var slingshotCenterX = game.slingshotX + 35;
-             var slingshotCenterY = game.slingshotY+25;
-             var impulse = new b2Vec2((slingshotCenterX -mouse.x-game.offsetLeft)*impulseScaleFactor,(slingshotCenterY-mouse.y)*impulseScaleFactor);
+             var bowCenterX = game.bowX + 35;
+             var bowCenterY = game.bowY+25;
+             var impulse = new b2Vec2((bowCenterX -mouse.x-game.offsetLeft)*impulseScaleFactor,(bowCenterY-mouse.y)*impulseScaleFactor);
              game.currentHero.ApplyImpulse(impulse,game.currentHero.GetWorldCenter());
 
          }
@@ -245,7 +247,7 @@ var game={
              game.currentHero.SetAwake(true);				
          } else {
              // Esperar a que el héroe deje de rebotar y se duerma y luego cambie a espera para disparar (wait-for-firing)
-             game.panTo(game.slingshotX);
+             game.panTo(game.bowX);
              if(!game.currentHero.IsAwake()){
                  game.mode = "wait-for-firing";
              }
@@ -284,18 +286,18 @@ var game={
 		game.context.drawImage(game.currentLevel.foregroundImage,game.offsetLeft,0,640,480,0,0,640,480);
 
 		// Dibujar la honda
-		game.context.drawImage(game.slingshotImage,game.slingshotX-game.offsetLeft,game.slingshotY);
+		game.context.drawImage(game.bowImage,game.bowX-game.offsetLeft,game.bowY);
 
 		// Dibujar todos los cuerpos
 		game.drawAllBodies();
 	
 		// Dibujar la banda cuando estamos disparando un héroe
 		if(game.mode == "wait-for-firing" || game.mode == "firing"){  
-			game.drawSlingshotBand();
+			game.drawBowBand();
 		}
 
 		// Dibujar el frente de la honda
-		game.context.drawImage(game.slingshotFrontImage,game.slingshotX-game.offsetLeft,game.slingshotY);
+		game.context.drawImage(game.bowFrontImage,game.bowX-game.offsetLeft,game.bowY);
 
 		if (!game.ended){
 			game.animationFrame = window.requestAnimationFrame(game.animate,game.canvas);
@@ -352,7 +354,7 @@ var game={
 			else{
 				$('#recordmessage').text('');
 			}
-			$('#heroes').text('REMAINING HEROES: ');
+			$('#heroes').text('REMAINING ROCKS: ');
 			$('#spanheroes').text(heroesLeft);
 			$('#actualscore').text('LEVEL SCORE: ');
 			$('#spanscore').text(this.score+' X '+multiplicador+' = '+this.score*multiplicador);
@@ -391,15 +393,15 @@ var game={
         $('#endingscreen').show();
     },
 
-    drawSlingshotBand:function(){
-		game.context.strokeStyle = "rgb(68,31,11)"; // Color marrón oscuro
-		game.context.lineWidth = 6; // Dibuja una línea gruesa
+    drawBowBand:function(){
+		game.context.strokeStyle = typebow; // Color marrón oscuro
+		game.context.lineWidth = 1; // Dibuja una línea gruesa
 
 		// Utilizar el ángulo y el radio del héroe para calcular el centro del héroe
 		var radius = game.currentHero.GetUserData().radius;
 		var heroX = game.currentHero.GetPosition().x*box2d.scale;
 		var heroY = game.currentHero.GetPosition().y*box2d.scale;			
-		var angle = Math.atan2(game.slingshotY+25-heroY,game.slingshotX+50-heroX);	
+		var angle = Math.atan2(game.bowY+25-heroY,game.bowX+50-heroX);	
 	
 		var heroFarEdgeX = heroX - radius * Math.cos(angle);
 		var heroFarEdgeY = heroY - radius * Math.sin(angle);
@@ -408,7 +410,7 @@ var game={
 	
 		game.context.beginPath();
 		// Iniciar la línea desde la parte superior de la honda (la parte trasera)
-		game.context.moveTo(game.slingshotX+10-game.offsetLeft, game.slingshotY+150);	
+		game.context.moveTo(game.bowX+10-game.offsetLeft, game.bowY+150);	
 
 		// Dibuja línea al centro del héroe
 		game.context.lineTo(heroX-game.offsetLeft,heroY);
@@ -422,7 +424,7 @@ var game={
 		game.context.moveTo(heroFarEdgeX-game.offsetLeft,heroFarEdgeY);
 	
 		// Dibujar línea de regreso a la parte superior de la honda (el lado frontal)
-		game.context.lineTo(game.slingshotX-game.offsetLeft +10,game.slingshotY)
+		game.context.lineTo(game.bowX-game.offsetLeft +10,game.bowY)
 		game.context.stroke();
 	},
 
@@ -558,8 +560,8 @@ var levels = {
          //Cargar las imágenes de fondo, primer plano y honda
          game.currentLevel.backgroundImage = loader.loadImage("images/backgrounds/"+level.background+".png");
          game.currentLevel.foregroundImage = loader.loadImage("images/backgrounds/"+level.foreground+".png");
-         game.slingshotImage = loader.loadImage("images/arco2.png");
-         game.slingshotFrontImage = loader.loadImage("images/arco2.png");
+         game.bowImage = loader.loadImage("images/arco.png");
+         game.bowFrontImage = loader.loadImage("images/arco.png");
  
          // Cargar todas la entidades
          for (var i = level.entities.length - 1; i >= 0; i--){	
