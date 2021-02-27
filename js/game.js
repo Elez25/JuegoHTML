@@ -603,23 +603,46 @@ var levels = {
                 {type:"ground", name:"wood", x:185,y:390,width:30,height:80,isStatic:true},
 
 				{type:"ground", name:"dirt", x:500,y:440,width:1000,height:20,isStatic:true},
-                   {type:"ground", name:"wood", x:185,y:390,width:30,height:80,isStatic:true},
+                {type:"ground", name:"wood", x:185,y:390,width:30,height:80,isStatic:true},
        
-                   
-                   {type:"block", name:"wood", x:720,y:380,angle:90,width:100,height:25},
-                   {type:"block", name:"wood", x:620,y:380,angle:90,width:100,height:25},
-				   
-                   {type:"block", name:"glass", x:670,y:317.5,width:100,height:25},
+                //torre izquierda   
+                {type:"block", name:"wood", x:520,y:380,angle:90,width:100,height:25},
+                {type:"block", name:"wood", x:620,y:380,angle:90,width:100,height:25},
+				{type:"block", name:"glass", x:570,y:317.5,width:100,height:25},
+				{type:"villain", name:"black_knight",x:570,y:380,calories:590},
                    				
-   
-                   {type:"block", name:"glass", x:620,y:255,angle:90,width:100,height:25},
-                   {type:"block", name:"glass", x:720,y:255,angle:90,width:100,height:25},
-                   {type:"block", name:"wood", x:670,y:192.5,width:100,height:25},
+   				{type:"block", name:"glass", x:520,y:255,angle:90,width:100,height:25},
+                {type:"block", name:"glass", x:620,y:255,angle:90,width:100,height:25},
+                {type:"block", name:"wood", x:570,y:192.5,width:100,height:25},
+				{type:"villain", name:"black_knight",x:570,y:255,calories:590},
+
+				{type:"block", name:"wood", x:520,y:140,angle:90,width:100,height:25},
+				{type:"block", name:"wood", x:620,y:140,angle:90,width:100,height:25},
+				{type:"block", name:"wood", x:570,y:77,width:100,height:25},
+				{type:"villain", name:"black_knight",x:570,y:140,calories:590},
+
+				//torre derecha   
+                {type:"block", name:"wood", x:820,y:380,angle:90,width:100,height:25},
+                {type:"block", name:"wood", x:920,y:380,angle:90,width:100,height:25},
+				{type:"block", name:"glass", x:870,y:317.5,width:100,height:25},
+				{type:"villain", name:"black_knight",x:870,y:380,calories:590},
+                   				
+   				{type:"block", name:"glass", x:820,y:255,angle:90,width:100,height:25},
+                {type:"block", name:"glass", x:920,y:255,angle:90,width:100,height:25},
+                {type:"block", name:"wood", x:870,y:192.5,width:100,height:25},
+				{type:"villain", name:"black_knight",x:870,y:255,calories:590},
 				   
-				   
-				   {type:"block", name:"wood", x:740,y:140,angle:90,width:100,height:25},
-				   {type:"block", name:"wood", x:830,y:140,angle:90,width:100,height:25},
-				   {type:"block", name:"wood", x:775,y:77,width:100,height:25},
+				{type:"block", name:"wood", x:820,y:140,angle:90,width:100,height:25},
+				{type:"block", name:"wood", x:920,y:140,angle:90,width:100,height:25},
+				{type:"block", name:"wood", x:870,y:77,width:100,height:25},
+				{type:"villain", name:"black_knight",x:870,y:140,calories:590},
+
+				//zona Boss
+				{type:"block", name:"wood", x:650,y:140,angle:90,width:150,height:35},
+				{type:"block", name:"wood", x:790,y:140,angle:90,width:150,height:35},
+				{type:"block", name:"wood", x:720,y:77,width:160,height:25},
+				{type:"villain", name:"boss",x:720,y:155,calories:590},
+				{type:"villain", name:"black_knight",x:720,y:0,calories:590},
 
 				{type:"hero", name:"roca",x:30,y:415},
 				{type:"hero", name:"roca_pinchos",x:80,y:405},
@@ -799,7 +822,7 @@ var entities = {
             fullHealth:500,
             density:0.7,
             friction:0.4,
-            restitution:0.4,
+            restitution:0.2,
         },
 		"ladrilloRojo":{
 			fullHealth:500,
@@ -888,11 +911,11 @@ var entities = {
 		"boss":{
 			shape:"rectangle",
             fullHealth:250,
-            width:60,
-            height:80,
+            width:80,
+            height:120,
             density:1,
             friction:0.5,
-            restitution:0.6,
+            restitution:0.3,
 		}
 	},
 	//Tomar la entidad, crear un cuerpo box2d y añadirlo al mundo
@@ -938,13 +961,7 @@ var entities = {
 					entity.width = definition.width;
 					entity.height = definition.height;
 					box2d.createRectangle(entity,definition);					
-				}
-				else if(definition.shape == "rectangle2"){
-					entity.width = definition.width;
-					entity.height = definition.height;
-					box2d.createRectangle2(entity,definition);					
-				}												 
-				break;							
+				} 							
 			default:
 				console.log("Undefined entity type",entity.type);
 				break;
@@ -961,10 +978,6 @@ var entities = {
 						-entity.width/2-1,-entity.height/2-1,entity.width+2,entity.height+2);	
 			break;
 			case "villain":
-				if (entity.shape=="rectangle2"){
-					game.context.drawImage(entity.sprite,0,0,entity.sprite.width,entity.sprite.height,
-							-entity.width/2-1,-entity.height/2-1,entity.width+2,entity.height+2);
-				}
 			case "hero": 
 				if (entity.shape=="circle"){
 					game.context.drawImage(entity.sprite,0,0,entity.sprite.width,entity.sprite.height,
@@ -1077,34 +1090,7 @@ var box2d = {
         return body;
 },
 
-createRectangle2:function(entity,definition){
-	var bodyDef = new b2BodyDef;
-	if(entity.isStatic){
-		bodyDef.type = b2Body.b2_staticBody;
-	} else {
-		bodyDef.type = b2Body.b2_dynamicBody;
-	}
-	
-	bodyDef.position.x = entity.x/box2d.scale;
-	bodyDef.position.y = entity.y/box2d.scale;
-	if (entity.angle) {
-		bodyDef.angle = Math.PI*entity.angle/180;
-	}
-	
-	var fixtureDef = new b2FixtureDef;
-	fixtureDef.density = definition.density;
-	fixtureDef.friction = definition.friction;
-	fixtureDef.restitution = definition.restitution;
 
-	fixtureDef.shape = new b2PolygonShape;
-	fixtureDef.shape.SetAsBox(entity.width/1.5/box2d.scale,entity.height/1.5/box2d.scale);
-	
-	var body = box2d.world.CreateBody(bodyDef);	
-	body.SetUserData(entity);
-	
-	var fixture = body.CreateFixture(fixtureDef);
-	return body;
-},
 
 createCircle:function(entity,definition){
         var bodyDef = new b2BodyDef;
