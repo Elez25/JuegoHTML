@@ -98,7 +98,7 @@ var game={
     // Modo Juego 
 	mode:"intro", 
 	// Coordenadas X & Y de la honda
-	slingshotX:140,
+	slingshotX:160,
 	slingshotY:280,
 
     start:function(){
@@ -408,7 +408,7 @@ var game={
 	
 		game.context.beginPath();
 		// Iniciar la línea desde la parte superior de la honda (la parte trasera)
-		game.context.moveTo(game.slingshotX+50-game.offsetLeft, game.slingshotY+25);	
+		game.context.moveTo(game.slingshotX+10-game.offsetLeft, game.slingshotY+150);	
 
 		// Dibuja línea al centro del héroe
 		game.context.lineTo(heroX-game.offsetLeft,heroY);
@@ -422,7 +422,7 @@ var game={
 		game.context.moveTo(heroFarEdgeX-game.offsetLeft,heroFarEdgeY);
 	
 		// Dibujar línea de regreso a la parte superior de la honda (el lado frontal)
-		game.context.lineTo(game.slingshotX-game.offsetLeft +10,game.slingshotY+30)
+		game.context.lineTo(game.slingshotX-game.offsetLeft +10,game.slingshotY)
 		game.context.stroke();
 	},
 
@@ -558,8 +558,8 @@ var levels = {
          //Cargar las imágenes de fondo, primer plano y honda
          game.currentLevel.backgroundImage = loader.loadImage("images/backgrounds/"+level.background+".png");
          game.currentLevel.foregroundImage = loader.loadImage("images/backgrounds/"+level.foreground+".png");
-         game.slingshotImage = loader.loadImage("images/slingshot.png");
-         game.slingshotFrontImage = loader.loadImage("images/slingshot-front.png");
+         game.slingshotImage = loader.loadImage("images/arco2.png");
+         game.slingshotFrontImage = loader.loadImage("images/arco2.png");
  
          // Cargar todas la entidades
          for (var i = level.entities.length - 1; i >= 0; i--){	
