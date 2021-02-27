@@ -67,8 +67,10 @@ var game={
     showLevelScreen:function(){
         $('.gamelayer').hide();
         $('#levelselectscreen').show('slow');
-		$('#selbutton').show('slow');
-		game.stopBackgroundMusic();	
+		$('#selbutton').show('slow');	
+		game.stopBackgroundMusic();
+		window.cancelAnimationFrame(game.animationFrame);		
+		game.lastUpdateTime = undefined;
     },
 
 	showMenu:function(){
@@ -117,7 +119,7 @@ var game={
 	maxSpeed:3,
 	// Mínimo y Máximo desplazamiento panorámico
 	minOffset:0,
-	maxOffset:300,
+	maxOffset:350,
 	// Desplazamiento de panorámica actual
 	offsetLeft:0,
 	// La puntuación del juego
@@ -477,13 +479,13 @@ var levels = {
                {type:"ground", name:"dirt", x:500,y:440,width:1000,height:20,isStatic:true},
                {type:"ground", name:"wood", x:185,y:390,width:30,height:80,isStatic:true},
    
-               {type:"block", name:"ladrilloRojo", x:520,y:380,angle:90,width:100,height:25},
-               {type:"block", name:"ladrilloGris", x:520,y:280,angle:90,width:100,height:25},								
-               {type:"villain", name:"black_knight",x:520,y:205,calories:590},
+               {type:"block", name:"ladrilloRojo", x:720,y:380,angle:90,width:100,height:25},
+               {type:"block", name:"ladrilloGris", x:720,y:280,angle:90,width:100,height:25},								
+               {type:"villain", name:"black_knight",x:720,y:205,calories:590},
    
-               {type:"block", name:"ladrilloBlanco", x:620,y:380,angle:90,width:100,height:25},
-               {type:"block", name:"ladrilloMarron", x:620,y:280,angle:90,width:100,height:25},								
-               {type:"villain", name:"black_knight",x:620,y:205,calories:590},				
+               {type:"block", name:"ladrilloBlanco", x:820,y:380,angle:90,width:100,height:25},
+               {type:"block", name:"ladrilloMarron", x:820,y:280,angle:90,width:100,height:25},								
+               {type:"villain", name:"black_knight",x:820,y:205,calories:590},				
    
                {type:"hero", name:"roca",x:80,y:405},
                {type:"hero", name:"roca_pinchos",x:140,y:405},
