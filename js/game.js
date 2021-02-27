@@ -481,11 +481,11 @@ var levels = {
    
                {type:"block", name:"ladrilloRojo", x:720,y:380,angle:90,width:100,height:25},
                {type:"block", name:"ladrilloGris", x:720,y:280,angle:90,width:100,height:25},								
-               {type:"villain", name:"black_knight",x:720,y:205,calories:590},
+               {type:"villain", name:"black_knight",x:715,y:205,calories:590},
    
                {type:"block", name:"ladrilloBlanco", x:820,y:380,angle:90,width:100,height:25},
                {type:"block", name:"ladrilloMarron", x:820,y:280,angle:90,width:100,height:25},								
-               {type:"villain", name:"black_knight",x:820,y:205,calories:590},				
+               {type:"villain", name:"black_knight",x:815,y:205,calories:590},				
    
                {type:"hero", name:"roca",x:80,y:405},
                {type:"hero", name:"roca_pinchos",x:140,y:405},
