@@ -359,8 +359,6 @@ var game={
 			var level = game.currentLevel.number+1;
 			var buttonCurrentLevel= document.getElementById('button'+level);
 			buttonCurrentLevel.style.cssText='background: #3cd31e;';
-			console.log(levels.data.length);
-			console.log(level+1);
 			if((level+1)!=levels.data.length+1){
 				var buttonNextLevel = document.getElementById('button'+(level+1));
 				buttonNextLevel.disabled = false;
@@ -383,6 +381,7 @@ var game={
 				total=total+totalLevels[i];
 			}
 			$('#totalscore').text('TOTAL GAME SCORE: ');
+			$('#gamescore').html('Game Score: '+total);
 			$('#spantotal').text(total);
 			endingmessage.style.cssText= '-webkit-text-fill-color: #93FF33;';
 
@@ -405,9 +404,12 @@ var game={
 			$('#spanscore').text('');
 			$('#totalscore').text('');
 			$('#spantotal').text('');
-			if(game.currentLevel.number==levels.data.length-1){
+			if(totalLevels[game.currentLevel.number]==0){
 				$("#playnextlevel").hide();
+			} else if(game.currentLevel.number<levels.data.length-1){
+				$("#playnextlevel").show();
 			}
+			
         }		
 
         $('#endingscreen').show();
@@ -1001,7 +1003,8 @@ var entities = {
 					entity.width = definition.width;
 					entity.height = definition.height;
 					box2d.createRectangle(entity,definition);					
-				} 							
+				} 	
+				break;						
 			default:
 				console.log("Undefined entity type",entity.type);
 				break;
