@@ -33,7 +33,7 @@ $(window).load(function(){
 
 var totalLevels;
 var typeVillain="1";
-var typebow="#F9B4FF";
+var typebow="F9B4FF";
 /*****************
 ***OBJETO JUEGO***
 ******************/
@@ -416,7 +416,7 @@ var game={
     },
 
     drawBowBand:function(){
-		game.context.strokeStyle = typebow; // Color marrón oscuro
+		game.context.strokeStyle = "#"+typebow; // Color arco
 		game.context.lineWidth = 1; // Dibuja una línea gruesa
 
 		// Utilizar el ángulo y el radio del héroe para calcular el centro del héroe
@@ -751,8 +751,9 @@ var levels = {
          //Cargar las imágenes de fondo, primer plano y honda
          game.currentLevel.backgroundImage = loader.loadImage("images/backgrounds/"+level.background+".png");
          game.currentLevel.foregroundImage = loader.loadImage("images/backgrounds/"+level.foreground+".png");
-         game.bowImage = loader.loadImage("images/arco.png");
-         game.bowFrontImage = loader.loadImage("images/arco.png");
+		 console.log(typebow);
+         game.bowImage = loader.loadImage("images/arco"+typebow+".png");
+         game.bowFrontImage =  loader.loadImage("images/arco"+typebow+".png");
  
          // Cargar todas la entidades
          for (var i = level.entities.length - 1; i >= 0; i--){	
