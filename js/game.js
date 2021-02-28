@@ -705,13 +705,32 @@ var levels = {
 		});
 
 		$('button').mouseover(function(){
-			game.mouseover.play();
+			var playPromise=game.mouseover.play();
+			if (playPromise !== undefined) {
+				playPromise.then(_ => {
+				})
+				.catch(error => {
+					
+				});
+			  }
 		});
 		$('a').mouseover(function(){
-			game.mouseover.play();
+			var playPromise=game.mouseover.play();
+			if (playPromise !== undefined) {
+				playPromise.then(_ => {
+				})
+				.catch(error => {
+				});
+			  }
 		});
 		$('label').mouseover(function(){
-			game.mouseover.play();
+			var playPromise=game.mouseover.play();
+			if (playPromise !== undefined) {
+				playPromise.then(_ => {
+				})
+				.catch(error => {
+				});
+			  }
 		});
 		
 	},
