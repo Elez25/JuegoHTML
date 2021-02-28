@@ -47,6 +47,7 @@
 #togglemusic{
     cursor: pointer;
     margin-top: 20px;
+    margin-left: 2%;
     user-select: none;
     -moz-user-select: none;
     -webkit-user-drag: none;
@@ -82,6 +83,14 @@
     position:absolute;
     top:5px;
     right:20px;
+}
+#scorescreen #cabeceraScore{
+    display: flex;
+    flex-direction: row;
+}
+#scorescreen #resetBack{
+    margin-top: 2%;
+    margin-left: 5%;
 }
 
 #endingscreen{

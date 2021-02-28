@@ -432,7 +432,7 @@ var game={
 	
 		game.context.beginPath();
 		// Iniciar la línea desde la parte superior de la honda (la parte trasera)
-		game.context.moveTo(game.bowX+10-game.offsetLeft, game.bowY+150);	
+		game.context.moveTo(game.bowX+40-game.offsetLeft, game.bowY+150);	
 
 		// Dibuja línea al centro del héroe
 		game.context.lineTo(heroX-game.offsetLeft,heroY);
@@ -446,7 +446,7 @@ var game={
 		game.context.moveTo(heroFarEdgeX-game.offsetLeft,heroFarEdgeY);
 	
 		// Dibujar línea de regreso a la parte superior de la honda (el lado frontal)
-		game.context.lineTo(game.bowX-game.offsetLeft +10,game.bowY)
+		game.context.lineTo(game.bowX-game.offsetLeft +40,game.bowY)
 		game.context.stroke();
 	},
 
@@ -665,7 +665,6 @@ var levels = {
 				{type:"block", name:"wood", x:790,y:140,angle:90,width:150,height:35},
 				{type:"block", name:"wood", x:720,y:77,width:160,height:25},
 				{type:"villain", name:"boss",x:720,y:155,calories:590},
-				{type:"villain", name:"black_knight",x:720,y:0,calories:590},
 
 				{type:"hero", name:"roca",x:30,y:415},
 				{type:"hero", name:"roca_pinchos",x:80,y:405},
@@ -751,7 +750,7 @@ var levels = {
          //Cargar las imágenes de fondo, primer plano y honda
          game.currentLevel.backgroundImage = loader.loadImage("images/backgrounds/"+level.background+".png");
          game.currentLevel.foregroundImage = loader.loadImage("images/backgrounds/"+level.foreground+".png");
-		 console.log(typebow);
+		
          game.bowImage = loader.loadImage("images/arco"+typebow+".png");
          game.bowFrontImage =  loader.loadImage("images/arco"+typebow+".png");
  

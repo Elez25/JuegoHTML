@@ -14,13 +14,15 @@
     <div id="gamecontainer">
         <canvas id="gamecanvas" width="640" height="480" class="gamelayer"></canvas>
         <div id="scorescreen" class="gamelayer">
-            <img id="togglemusic" src="images/icons/nosound.png" onclick="game.toggleBackgroundMusic();">
-            <span id="backrestart" class="resetButton">
+            <div id="cabeceraScore"><img id="togglemusic" src="images/icons/nosound.png" onclick="game.toggleBackgroundMusic();">
+            <div id="resetBack"><span id="backrestart" class="resetButton">
                 <a onclick="game.showLevelScreen();" >BACK</a>
             </span>
             <span id="restart" class="resetButton">
                 <a onclick="game.restartLevel();">RESET</a>
             </span>
+            </div><!--rest back-->
+            </div><!--caberecera score-->
             <span id="score">Score: 0</span>
         </div>
 
