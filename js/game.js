@@ -544,8 +544,8 @@ var levels = {
            },
 
 		   {   // Tercer nivel
-			foreground:'front_decor_2',
-			background:'game_background_2',
+			foreground:'front_decor_3',
+			background:'game_background_3',
                entities:[
 				{type:"ground", name:"dirt", x:500,y:440,width:1000,height:20,isStatic:true},
                 {type:"ground", name:"wood", x:185,y:390,width:30,height:80,isStatic:true},
@@ -580,8 +580,8 @@ var levels = {
 		   },
 
 		   {   // Cuarto Nivel nivel
-			foreground:'front_decor_2',
-			background:'game_background_2',
+			foreground:'front_decor_4',
+			background:'game_background_4',
                entities:[
                    {type:"ground", name:"dirt", x:500,y:440,width:1000,height:20,isStatic:true},
                    {type:"ground", name:"wood", x:185,y:390,width:30,height:80,isStatic:true},
@@ -619,8 +619,8 @@ var levels = {
 		   
 
 		   {   // Quinto nivel
-			foreground:'front_decor_2',
-			background:'game_background_2',
+			foreground:'front_decor_5',
+			background:'game_background_5',
                entities:[
 				{type:"ground", name:"dirt", x:500,y:440,width:1000,height:20,isStatic:true},
                 {type:"ground", name:"wood", x:185,y:390,width:30,height:80,isStatic:true},
