@@ -47,6 +47,8 @@ var game={
 		// Cargar todos los efectos de sonido y música de fondo
 
 		game.backgroundMusic = loader.loadSound('audio/medieval');
+		game.mouseover = loader.loadSound('audio/mouseover');
+		game.click = loader.loadSound('audio/click');
 
 		game.bowReleasedSound = loader.loadSound("audio/released");
 		game.bounceSound = loader.loadSound('audio/bounce');
@@ -66,6 +68,7 @@ var game={
 	},
 
     showLevelScreen:function(){
+		game.click.play();
         $('.gamelayer').hide();
         $('#levelselectscreen').show('slow');
 		$('#selbutton').show('slow');	
@@ -75,15 +78,18 @@ var game={
     },
 
 	showMenu:function(){
+		game.click.play();
 		$('#levelselectscreen').hide();
         $('#gamestartscreen').show('slow');
 	},
 	
 	showMenuSettings:function(){
+		game.click.play();
 		$('#settingscreen').hide();
         $('#gamestartscreen').show('slow');
 	},
 	saveSettings:function(){
+		game.click.play();
 		$('#settingscreen').hide();
         $('#gamestartscreen').show('slow');
 		var song=$('input[name=audio]:checked', '#audioform').val();
@@ -92,16 +98,21 @@ var game={
 		typebow=$('input[name=bow]:checked', '#bowform').val();
 	},
 
-	showSettings(){
+	showSettings:function(){
+		game.click.play();
         $('.gamelayer').hide();
         $('#settingscreen').show('slow');
+		
+	},
+	sound:function(){
+		game.click.play();
 	},
 
     // Modo Juego 
 	mode:"intro", 
 	// Coordenadas X & Y de la honda
 	bowX:160,
-	bowY:265,
+	bowY:280,
 
     start:function(){
 		$('.gamelayer').hide();
@@ -342,10 +353,19 @@ var game={
 		var endingmessage = document.getElementById('endingmessage');
         game.stopBackgroundMusic();	
 		$('#backrestart').hide();	
-		$('#restart').hide();			
+		$('#restart').hide();
         if (game.mode=="level-success"){
 			var heroesLeft = game.heroes.length;
-
+			var level = game.currentLevel.number+1;
+			var buttonCurrentLevel= document.getElementById('button'+level);
+			buttonCurrentLevel.style.cssText='background: #3cd31e;';
+			console.log(levels.data.length);
+			console.log(level+1);
+			if((level+1)!=levels.data.length+1){
+				var buttonNextLevel = document.getElementById('button'+(level+1));
+				buttonNextLevel.disabled = false;
+				buttonNextLevel.style.cssText='background: #F78900';
+			}
 			var multiplicador = heroesLeft+1;
 			if(totalLevels[game.currentLevel.number]<this.score*multiplicador){
 				totalLevels[game.currentLevel.number] = this.score*multiplicador;
@@ -368,11 +388,11 @@ var game={
 
             if(game.currentLevel.number<levels.data.length-1){
 
-                $('#endingmessage').html('LEVEL COMPLETE');
+                $('#endingmessage').html('LEVEL COMPLETED');
                 $("#playnextlevel").show();
 				
             } else {
-                $('#endingmessage').html('ALL LEVELS COMPLETE!!!');
+                $('#endingmessage').html('GAME COMPLETED');
                 $("#playnextlevel").hide();
             }
         } else if (game.mode=="level-failure"){			
@@ -455,6 +475,7 @@ var game={
 		game.backgroundMusic.currentTime = 0; // Ir al comienzo de la canción
 	},
 	toggleBackgroundMusic:function(){
+		game.click.play();
 		var toggleImage = $("#togglemusic")[0];
 		if(game.backgroundMusic.paused){
 			game.backgroundMusic.play();
@@ -657,7 +678,14 @@ var levels = {
 		totalLevels=new Array(levels.data.length);
 		for (var i=0; i < levels.data.length; i++) {
 			var level = levels.data[i];
-			html +=   '<button>'+(i+1)+'<span></span><span></span><span></span><span</span></button>'
+			if(i==0){
+				html +=   '<button id="button'+(i+1)+'">'+(i+1)+'<span></span><span></span><span></span><span</span></button>'
+			}
+			else{
+				html +=   '<button id="button'+(i+1)+'" disabled>'+(i+1)+'<span></span><span></span><span></span><span</span></button>'
+			}
+				
+			
 			//Inicializamos el maximo score de cada nivel
 			totalLevels[i] = 0;
 		}
@@ -666,12 +694,24 @@ var levels = {
 		
 		// Establecer los controladores de eventos de clic de botón para cargar el nivel
 		$('#selbutton button').click(function(){
+			game.click.play();
 			var level = $(this).text();
 			levels.load(level-1);
 			$('#levelselectscreen').hide();
 			$('#backrestart').show();
 			$('#restart').show();
 		});
+
+		$('button').mouseover(function(){
+			game.mouseover.play();
+		});
+		$('a').mouseover(function(){
+			game.mouseover.play();
+		});
+		$('label').mouseover(function(){
+			game.mouseover.play();
+		});
+		
 	},
 
     // Cargar todos los datos e imágenes para un nivel específico
@@ -1125,6 +1165,4 @@ createCircle:function(entity,definition){
 		// posición de las iteraciones = 3
 		box2d.world.Step(timeStep,8,3);
 	},
-
-
 }

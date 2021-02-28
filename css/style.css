@@ -72,6 +72,10 @@
     color:white;
 }
 
+#scorescreen a:hover{
+    box-shadow: 0 0 25px rgb(0, 0, 0); 
+}
+
 #scorescreen #score{
     -webkit-text-fill-color: #F78900;
     -webkit-text-stroke: 1px rgb(255, 255, 255);
@@ -109,6 +113,9 @@
     position:relative;
     display:inline-block;
   }
+.menuButton a:hover{
+    box-shadow: 0 0 25px rgb(0, 0, 0); 
+}
   
 .menuButton a{
     cursor: pointer;
@@ -170,8 +177,6 @@
 .levelButton button{
     width:70px;
     height:70px;
-    background: linear-gradient(to left top, #F78900 50%, #F78900 50%);
-    border-style: none;
     color:#fff;
     font-size: 23px;
     letter-spacing: 3px;
@@ -409,7 +414,9 @@ a{
     position:relative;
     display:inline-block;
   }
-  
+.backButton a:hover{
+    box-shadow: 0 0 25px rgb(0, 0, 0); 
+}
 .backButton a{
     cursor: pointer;
     color:white;
@@ -516,6 +523,9 @@ a{
     display: flex;
     flex-direction: row;
 }
+#cabeceraSettings a:hover{
+    box-shadow: 0 0 25px rgb(0, 0, 0); 
+}
 
 #settings{
     margin-top: 12%;
@@ -617,4 +627,18 @@ a{
 #bowColor, #audio, #villain{
     display: flex;
     justify-content: space-around;
+}
+
+#button1{
+    background: #F78900;
+}
+
+#bowColor span:hover{
+    box-shadow: 0 0 25px rgb(218, 50, 38);
+}
+#audio span:hover{
+    box-shadow: 0 0 25px rgb(218, 50, 38);
+}
+#villain span:hover{
+    box-shadow: 0 0 25px rgb(218, 50, 38);
 }
