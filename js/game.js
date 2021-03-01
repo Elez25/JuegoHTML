@@ -34,6 +34,7 @@ $(window).load(function(){
 var totalLevels;
 var typeVillain="1";
 var typebow="F9B4FF";
+var isPowerup=false;
 /*****************
 ***OBJETO JUEGO***
 ******************/
@@ -106,6 +107,13 @@ var game={
 	},
 	sound:function(){
 		game.click.play();
+	},
+	powerup:function(){
+		var powerup=document.getElementById('powerup');
+		powerup.disabled = true;
+		powerup.style.cssText='background: #eb4921;webkit-box-shadow:inset 0 1px 0 #8f1101, inset 0 -3px 0 #8f1101;moz-box-shadow:inset 0 1px 0 #8f1101, inset 0 -3pxpx 0 #8f1101;box-shadow:inset 0 1px 0 #8f1101, inset 0 -3px 0 #8f1101;';
+		isPowerup=true;
+		$('#activePowerUp').html('Power Activated!');
 	},
 
     // Modo Juego 
@@ -231,6 +239,10 @@ var game={
              // y carga el siguiente héroe
              game.mode = "load-next-hero";
          }
+		 var position = game.currentHero.GetPosition();
+		 if(position.y>=400){
+			box2d.world.DestroyBody(game.currentHero);
+		 }
      }
      
 
@@ -411,7 +423,10 @@ var game={
 			}
 			
         }		
-
+		if(isPowerup){
+			isPowerup=false;
+			$('#activePowerUp').html('');
+		}
         $('#endingscreen').show();
     },
 
@@ -455,7 +470,7 @@ var game={
 		game.lastUpdateTime = undefined;
 		levels.load(game.currentLevel.number);
 		$('#backrestart').show();
-		$('#restart').show();	
+		$('#restart').show();
 	},
 	startNextLevel:function(){
 		window.cancelAnimationFrame(game.animationFrame);		
@@ -1004,7 +1019,12 @@ var entities = {
 				entity.sprite = loader.loadImage("images/entities/Heroes/"+entity.name+".png");
 				entity.shape = definition.shape;
 				if(definition.shape == "circle"){
-					entity.radius = definition.radius;
+					if(isPowerup){
+						entity.radius = definition.radius*1.4;
+					}
+					else{
+						entity.radius = definition.radius;
+					}
 					box2d.createCircle(entity,definition);					
 				}
 				break;
@@ -1168,7 +1188,12 @@ createCircle:function(entity,definition){
             bodyDef.angle = Math.PI*entity.angle/180;
         }			
         var fixtureDef = new b2FixtureDef;
-        fixtureDef.density = definition.density;
+		if(isPowerup){
+			fixtureDef.density = (definition.density)/2.5;
+		} else{
+			fixtureDef.density = definition.density;
+		}
+        
         fixtureDef.friction = definition.friction;
         fixtureDef.restitution = definition.restitution;
 

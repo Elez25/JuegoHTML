@@ -607,6 +607,62 @@ h6{
     bottom: 5%;
     left:5%;
 }
+/*Boton powerup*/
+.powerButton{
+    margin-left: 15%;
+    margin-top: 10%;
+    position:relative;
+    display:inline-block;
+  }
+.powerButton button:hover{
+    box-shadow: 0 0 25px rgb(0, 0, 0); 
+}
+.powerButton button{
+    cursor: pointer;
+    color:white;
+    font-family: 'Rubik', sans-serif;
+    font-weight: bold;
+    font-size:18px;
+    text-align: center;
+    text-decoration:none;
+    background-color:#3cd31e;
+    display:block;
+    padding:10px 20px;
+    
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    text-shadow: 0px 1px 0px #000;
+    filter: dropshadow(color=#000, offx=0px, offy=1px);
+    
+    -webkit-box-shadow:inset 0 1px 0 #009107, 0 10px 0 #009107;
+    -moz-box-shadow:inset 0 1px 0 #009107, 0 10px 0 #009107;
+    box-shadow:inset 0 1px 0 #009107, 0 10px 0 #009107;
+    
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+  
+.powerButton button:active{
+    top:10px;
+    background-color:#8f1101;
+    -webkit-box-shadow:inset 0 1px 0 #000000, inset 0 -3px 0 #000000;
+    -moz-box-shadow:inset 0 1px 0 #000000, inset 0 -3pxpx 0 #000000;
+    box-shadow:inset 0 1px 0 #000000, inset 0 -3px 0 #000000;
+}
+  
+.powerButton button:after{
+    content:"";
+    height:100%;
+    width:100%;
+    padding:4px;
+    position: absolute;
+    bottom:-15px;
+    left:-4px;
+    z-index:-1;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
 body{
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -614,4 +670,11 @@ body{
        -moz-user-select: none; 
         -ms-user-select: none; 
             user-select: none;
+}
+
+#activePowerUp{
+    font-size: 25px;
+    margin-left:3%;
+    color: #3cd31e;
+    -webkit-text-stroke: 2px rgb(0, 0, 0);
 }
