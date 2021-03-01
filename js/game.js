@@ -387,7 +387,7 @@ var game={
 
             if(game.currentLevel.number<levels.data.length-1){
 
-                $('#endingmessage').html('LEVEL COMPLETED');
+                $('#endingmessage').html('LEVEL '+(game.currentLevel.number+1)+' COMPLETED');
                 $("#playnextlevel").show();
 				
             } else {
@@ -591,9 +591,9 @@ var levels = {
                    {type:"block", name:"ladrilloMarron", x:720,y:380,angle:90,width:100,height:25},
                    {type:"block", name:"ladrilloMarron", x:620,y:380,angle:90,width:100,height:25},
 				   {type:"block", name:"ladrilloMarron", x:920,y:380,angle:90,width:100,height:25},
-                   {type:"block", name:"ladrilloBlanco", x:670,y:317.5,width:100,height:25},
-                   {type:"block", name:"ladrilloBlanco", x:770,y:317.5,width:100,height:25},
-				   {type:"block", name:"ladrilloBlanco", x:870,y:317.5,width:100,height:25},				
+                   {type:"block", name:"ladrilloRojo", x:670,y:317.5,width:100,height:25},
+                   {type:"block", name:"ladrilloRojo", x:770,y:317.5,width:100,height:25},
+				   {type:"block", name:"ladrilloRojo", x:870,y:317.5,width:100,height:25},				
    
                    {type:"block", name:"ladrilloMarron", x:670,y:255,angle:90,width:100,height:25},
                    {type:"block", name:"ladrilloMarron", x:770,y:255,angle:90,width:100,height:25},
@@ -897,7 +897,7 @@ var entities = {
             restitution:0.15,
 		},
 		"ladrilloBlanco":{
-			fullHealth:100,
+			fullHealth:200,
             density:2.4,
             friction:0.4,
             restitution:0.15,
