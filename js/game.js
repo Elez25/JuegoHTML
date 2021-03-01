@@ -129,7 +129,7 @@ var game={
 	},
 
     // Velocidad máxima de panoramización por fotograma en píxeles
-	maxSpeed:3,
+	maxSpeed:2.5,
 	// Mínimo y Máximo desplazamiento panorámico
 	minOffset:0,
 	maxOffset:350,
@@ -510,7 +510,8 @@ var levels = {
    
                {type:"block", name:"ladrilloMarron", x:820,y:380,angle:90,width:100,height:25},
                {type:"block", name:"ladrilloRojo", x:820,y:280,angle:90,width:100,height:25},								
-               {type:"villain", name:"black_knight",x:815,y:205,calories:590},				
+               {type:"villain", name:"black_knight",x:815,y:205,calories:590},
+			   			
    
                {type:"hero", name:"roca",x:80,y:405},
                {type:"hero", name:"roca_pinchos",x:140,y:405},
@@ -627,9 +628,9 @@ var levels = {
 
        
                 //torre izquierda   
-                {type:"block", name:"ladrilloRojo", x:520,y:380,angle:90,width:100,height:25},
-                {type:"block", name:"ladrilloRojo", x:620,y:380,angle:90,width:100,height:25},
-				{type:"block", name:"ladrilloMarron", x:570,y:317.5,width:100,height:25},
+                {type:"block", name:"ladrilloGris", x:520,y:380,angle:90,width:100,height:25},
+                {type:"block", name:"ladrilloGris", x:620,y:380,angle:90,width:100,height:25},
+				{type:"block", name:"ladrilloGris", x:570,y:317.5,width:100,height:25},
 				{type:"villain", name:"silver_knight",x:570,y:380,calories:590},
                    				
    				{type:"block", name:"ladrilloRojo", x:520,y:255,angle:90,width:100,height:25},
@@ -643,26 +644,26 @@ var levels = {
 				{type:"villain", name:"black_knight",x:570,y:140,calories:590},
 
 				//torre derecha   
-                {type:"block", name:"ladrilloRojo", x:820,y:380,angle:90,width:100,height:25},
-                {type:"block", name:"ladrilloRojo", x:920,y:380,angle:90,width:100,height:25},
-				{type:"block", name:"ladrilloMarron", x:870,y:317.5,width:100,height:25},
-				{type:"villain", name:"silver_knight",x:870,y:380,calories:590},
+                {type:"block", name:"ladrilloGris", x:830,y:380,angle:90,width:100,height:25},
+                {type:"block", name:"ladrilloGris", x:930,y:380,angle:90,width:100,height:25},
+				{type:"block", name:"ladrilloGris", x:880,y:317.5,width:100,height:25},
+				{type:"villain", name:"silver_knight",x:880,y:380,calories:590},
                    				
-   				{type:"block", name:"ladrilloRojo", x:820,y:255,angle:90,width:100,height:25},
-                {type:"block", name:"ladrilloRojo", x:920,y:255,angle:90,width:100,height:25},
-                {type:"block", name:"ladrilloMarron", x:870,y:192.5,width:100,height:25},
-				{type:"villain", name:"bronze_knight",x:870,y:255,calories:590},
+   				{type:"block", name:"ladrilloRojo", x:830,y:255,angle:90,width:100,height:25},
+                {type:"block", name:"ladrilloRojo", x:930,y:255,angle:90,width:100,height:25},
+                {type:"block", name:"ladrilloMarron", x:880,y:192.5,width:100,height:25},
+				{type:"villain", name:"bronze_knight",x:880,y:255,calories:590},
 				   
-				{type:"block", name:"ladrilloRojo", x:820,y:140,angle:90,width:100,height:25},
-				{type:"block", name:"ladrilloRojo", x:920,y:140,angle:90,width:100,height:25},
-				{type:"block", name:"ladrilloMarron", x:870,y:77,width:100,height:25},
-				{type:"villain", name:"black_knight",x:870,y:140,calories:590},
+				{type:"block", name:"ladrilloRojo", x:830,y:140,angle:90,width:100,height:25},
+				{type:"block", name:"ladrilloRojo", x:930,y:140,angle:90,width:100,height:25},
+				{type:"block", name:"ladrilloMarron", x:880,y:77,width:100,height:25},
+				{type:"villain", name:"black_knight",x:880,y:140,calories:590},
 
 				//zona Boss
-				{type:"block", name:"ladrilloGris", x:650,y:140,angle:90,width:150,height:35},
-				{type:"block", name:"ladrilloGris", x:790,y:140,angle:90,width:150,height:35},
-				{type:"block", name:"ladrilloGris", x:720,y:77,width:160,height:25},
-				{type:"villain", name:"boss",x:720,y:155,calories:590},
+				{type:"block", name:"ladrilloGris", x:650,y:370,angle:90,width:150,height:35},
+				{type:"block", name:"ladrilloGris", x:790,y:370,angle:90,width:150,height:35},
+				{type:"block", name:"ladrilloGris", x:720,y:307,width:160,height:25},
+				{type:"villain", name:"boss",x:720,y:380,calories:590},	
 
 				{type:"hero", name:"roca",x:30,y:415},
 				{type:"hero", name:"roca_pinchos",x:80,y:405},
