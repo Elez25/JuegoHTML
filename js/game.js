@@ -24,6 +24,16 @@
 		};
 }());
 
+//sleep
+function sleep(milliseconds) {
+	var start = new Date().getTime();
+	for (var i = 0; i < 1e7; i++) {
+	 if ((new Date().getTime() - start) > milliseconds) {
+	  break;
+	 }
+	}
+   }
+
 $(window).load(function(){
     game.init();/*necesario para evitar
     comportamientos inesperados, tales como errores
@@ -253,7 +263,8 @@ var game={
 				box2d.world.DestroyBody(game.currentHero);
 				game.currentHero = undefined;
 				game.decelerating = 0;
-				// y carga el siguiente héroe
+				// y carga el siguiente héroe tras esperar segundo y medio
+				sleep(1500);
 				game.mode = "load-next-hero";
 		 }
      }
@@ -514,7 +525,8 @@ var game={
 			game.backgroundMusic.pause();	
 			$("#togglemusic")[0].src="images/icons/nosound.png";
 		}
-	}
+	},
+	
 }
 
 /*****************
@@ -1225,3 +1237,4 @@ createCircle:function(entity,definition){
 		box2d.world.Step(timeStep,8,3);
 	},
 }
+
