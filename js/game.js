@@ -54,7 +54,7 @@ var game={
 		game.bounceSound = loader.loadSound('audio/bounce');
 		game.breakSound = {
 			"glass":loader.loadSound('audio/glassbreak'),
-			"wood":loader.loadSound('audio/woodbreak')
+			"ladrilloMarron":loader.loadSound('audio/woodbreak'),
 		};
 
 
@@ -591,15 +591,15 @@ var levels = {
                    {type:"block", name:"ladrilloMarron", x:720,y:380,angle:90,width:100,height:25},
                    {type:"block", name:"ladrilloMarron", x:620,y:380,angle:90,width:100,height:25},
 				   {type:"block", name:"ladrilloMarron", x:920,y:380,angle:90,width:100,height:25},
-                   {type:"block", name:"ladrilloBlanco", x:670,y:317.5,width:100,height:25},
-                   {type:"block", name:"ladrilloBlanco", x:770,y:317.5,width:100,height:25},
-				   {type:"block", name:"ladrilloBlanco", x:870,y:317.5,width:100,height:25},				
+                   {type:"block", name:"ladrilloRojo", x:670,y:317.5,width:100,height:25},
+                   {type:"block", name:"ladrilloRojo", x:770,y:317.5,width:100,height:25},
+				   {type:"block", name:"ladrilloRojo", x:870,y:317.5,width:100,height:25},				
    
                    {type:"block", name:"ladrilloMarron", x:670,y:255,angle:90,width:100,height:25},
                    {type:"block", name:"ladrilloMarron", x:770,y:255,angle:90,width:100,height:25},
 				   {type:"block", name:"ladrilloMarron", x:870,y:255,angle:90,width:100,height:25},
-                   {type:"block", name:"ladrilloBlanco", x:720,y:192.5,width:100,height:25},
-				   {type:"block", name:"ladrilloBlanco", x:820,y:192.5,width:100,height:25},
+                   {type:"block", name:"ladrilloRojo", x:720,y:192.5,width:100,height:25},
+				   {type:"block", name:"ladrilloRojo", x:820,y:192.5,width:100,height:25},
 				   
 				   {type:"block", name:"ladrilloGris", x:740,y:140,angle:90,width:100,height:25},
 				   {type:"block", name:"ladrilloGris", x:830,y:140,angle:90,width:100,height:25},
@@ -665,7 +665,7 @@ var levels = {
 				{type:"block", name:"ladrilloGris", x:720,y:307,width:160,height:25},
 				{type:"villain", name:"boss",x:720,y:380,calories:590},	
 
-				{type:"hero", name:"roca",x:30,y:415},
+				{type:"hero", name:"roca_cadena",x:30,y:415},
 				{type:"hero", name:"roca_pinchos",x:80,y:405},
 				{type:"hero", name:"roca_lava",x:140,y:405},
 			   ]
@@ -885,26 +885,26 @@ var entities = {
             restitution:0.2,
         },
 		"ladrilloRojo":{
-			fullHealth:500,
+			fullHealth:600,
             density:2.4,
             friction:0.4,
             restitution:0.15,
 		},
 		"ladrilloMarron":{
-			fullHealth:500,
-            density:2.4,
+			fullHealth:700,
+            density:3.4,
             friction:0.4,
             restitution:0.15,
 		},
 		"ladrilloBlanco":{
-			fullHealth:100,
+			fullHealth:200,
             density:2.4,
             friction:0.4,
             restitution:0.15,
 		},
 		"ladrilloGris":{
 			fullHealth:800,
-            density:2.4,
+            density:4.4,
             friction:0.4,
             restitution:0.15,
 		},
@@ -916,34 +916,34 @@ var entities = {
 		"roca":{
 			shape:"circle",
 			radius:25,
-            density:1.5,
-            friction:0.5,
+            density:1.25,
+            friction:0.2,
             restitution:0.4,
 		},
 		"roca_lava":{
 			shape:"circle",
 			radius:25,
             density:1.5,
-            friction:0.5,
+            friction:0.2,
             restitution:0.4,
 		},
 		"roca_cadena":{
 			shape:"circle",
 			radius:25,
-            density:1.5,
-            friction:0.5,
-            restitution:0.4,
+            density:2,
+            friction:0.2,
+            restitution:0.3,
 		},
 		"roca_pinchos":{
 			shape:"circle",
 			radius:25,
-            density:1.5,
+            density:2.5,
             friction:1.2,
-            restitution:0.4,
+            restitution:0.2,
 		},
 		"black_knight":{
             shape:"rectangle",
-            fullHealth:50,
+            fullHealth:100,
             width:60,
             height:80,
             density:1,
@@ -952,7 +952,7 @@ var entities = {
         },
 		"silver_knight":{
             shape:"rectangle",
-            fullHealth:50,
+            fullHealth:70,
             width:60,
             height:80,
             density:1,
