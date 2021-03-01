@@ -387,7 +387,7 @@ var game={
 
             if(game.currentLevel.number<levels.data.length-1){
 
-                $('#endingmessage').html('LEVEL COMPLETED');
+                $('#endingmessage').html('LEVEL '+(game.currentLevel.number+1)+' COMPLETED');
                 $("#playnextlevel").show();
 				
             } else {
