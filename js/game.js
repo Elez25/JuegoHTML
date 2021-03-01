@@ -252,6 +252,7 @@ var game={
 				// Luego borra el viejo héroe
 				box2d.world.DestroyBody(game.currentHero);
 				game.currentHero = undefined;
+				game.decelerating = 0;
 				// y carga el siguiente héroe
 				game.mode = "load-next-hero";
 		 }
