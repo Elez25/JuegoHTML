@@ -230,6 +230,8 @@ var game={
          } else {
              game.decelerating = 0;
          }
+		 var position = game.currentHero.GetPosition();
+
          if(!game.currentHero.IsAwake() || heroX<0 || heroX >game.currentLevel.foregroundImage.width || game.decelerating>350){
              // Luego borra el viejo héroe
              box2d.world.DestroyBody(game.currentHero);
@@ -239,9 +241,19 @@ var game={
              // y carga el siguiente héroe
              game.mode = "load-next-hero";
          }
-		 var position = game.currentHero.GetPosition();
-		 if(position.y>=400){
-			box2d.world.DestroyBody(game.currentHero);
+		 var limit;
+		if(isPowerup){
+			limit=390;
+		}
+		else{
+			limit=400;
+		}
+		 if(game.heroes.length!=1 && position.y*box2d.scale>limit){
+				// Luego borra el viejo héroe
+				box2d.world.DestroyBody(game.currentHero);
+				game.currentHero = undefined;
+				// y carga el siguiente héroe
+				game.mode = "load-next-hero";
 		 }
      }
      
