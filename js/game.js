@@ -242,21 +242,6 @@ var game={
              // y carga el siguiente héroe
              game.mode = "load-next-hero";
          }
-		 var limit;
-		if(isPowerup){
-			limit=390;
-		}
-		else{
-			limit=400;
-		}
-		 if(game.heroes.length!=1 && position.y*box2d.scale>limit){
-				// Luego borra el viejo héroe
-				box2d.world.DestroyBody(game.currentHero);
-				game.currentHero = undefined;
-				game.decelerating = 0;
-				// y carga el siguiente 
-				game.mode = "load-next-hero";
-		 }
      }
      
 
