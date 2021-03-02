@@ -554,7 +554,7 @@ var levels = {
 				{type:"hero", name:"roca",x:140,y:405},
 			]
 		 },
-		 {   // Segundo nivel 
+		 {   // Tercer nivel 
 			foreground:'front_decor_1',
 			background:'front_decor_2',
 			entities:[
@@ -584,7 +584,7 @@ var levels = {
 				{type:"hero", name:"roca_cadena",x:140,y:405},
 			]
 		 },
-		 {   // Segundo nivel 
+		 {   // Cuarto nivel 
 			foreground:'front_decor_1',
 			background:'front_decor_2',
 			entities:[
@@ -613,7 +613,7 @@ var levels = {
 				{type:"hero", name:"roca_cadena",x:140,y:405},
 			]
 		 },
-           {   // Segundo nivel
+           {   // Quinto nivel
 			foreground:'front_decor_2',
 			background:'game_background_2',
                entities:[
@@ -641,7 +641,7 @@ var levels = {
                ]
            },
 
-		   {   // Tercer nivel
+		   {   // Sexto nivel
 			foreground:'front_decor_3',
 			background:'game_background_3',
                entities:[
@@ -677,7 +677,7 @@ var levels = {
 			   ]
 		   },
 
-		   {   // Cuarto Nivel nivel
+		   {   // Septimo Nivel nivel
 			foreground:'front_decor_4',
 			background:'game_background_4',
                entities:[
@@ -716,7 +716,7 @@ var levels = {
 
 		   
 
-		   {   // Quinto nivel
+		   {   // Octavo nivel
 			foreground:'front_decor_5',
 			background:'game_background_5',
                entities:[
