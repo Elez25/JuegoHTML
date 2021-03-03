@@ -534,7 +534,7 @@ var levels = {
         },
 		{   // Segundo nivel 
 			foreground:'front_decor_1',
-			background:'front_decor_3',
+			background:'game_background_3',
 			entities:[
 				{type:"ground", name:"dirt", x:500,y:440,width:1000,height:20,isStatic:true},
 				{type:"ground", name:"wood", x:185,y:390,width:30,height:80,isStatic:true},
@@ -557,7 +557,7 @@ var levels = {
 		 },
 		 {   // Tercer nivel 
 			foreground:'front_decor_1',
-			background:'front_decor_2',
+			background:'game_background_2',
 			entities:[
 				{type:"ground", name:"dirt", x:500,y:440,width:1000,height:20,isStatic:true},
 				{type:"ground", name:"wood", x:185,y:390,width:30,height:80,isStatic:true},
@@ -587,7 +587,7 @@ var levels = {
 		 },
 		 {   // Cuarto nivel 
 			foreground:'front_decor_1',
-			background:'front_decor_2',
+			background:'game_background_2',
 			entities:[
 				{type:"ground", name:"dirt", x:500,y:440,width:1000,height:20,isStatic:true},
 				{type:"ground", name:"wood", x:185,y:390,width:30,height:80,isStatic:true},
@@ -788,7 +788,7 @@ var levels = {
 					html +=   '<button id="button'+(i+1)+'">'+(i+1)+'<span></span><span></span><span></span><span</span></button>'
 				}
 				else{
-					html +=   '<button id="button'+(i+1)+'" disabled>'+(i+1)+'<span></span><span></span><span></span><span</span></button>'
+					html +=   '<button id="button'+(i+1)+'">'+(i+1)+'<span></span><span></span><span></span><span</span></button>'
 				}	
 				//Inicializamos el maximo score de cada nivel
 				totalLevels[i] = 0;
