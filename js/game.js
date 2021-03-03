@@ -182,31 +182,30 @@ var game={
 				}
 			}
 		}
-		console.log(game.heroes.length);
-		/*if((game.heroes.length<1) && (game.mode=="intro")){
-			game.restartLevel();
-		}*/
 	},
     handlePanning:function(){
+		game.countHeroesAndVillains();
         if(game.mode=="intro"){	
-			console.log("estoy en intro")	
             if(game.panTo(700)){
                 game.mode = "load-next-hero";
-				console.log("esperando a cargar heroe");
             }			 
         }	   
 
-        if (game.mode=="wait-for-firing"){  
-         if (mouse.dragging){
-             if (game.mouseOnCurrentHero()){
-                 game.mode = "firing";
-             } else {
-                 game.panTo(mouse.x + game.offsetLeft)
-             }
-         } else {
-             game.panTo(game.bowX);
-         }
-     }
+		if (game.mode=="wait-for-firing"){  
+			
+			if(game.villains.length==0){
+				game.mode = "level-success";
+			}
+			if (mouse.dragging){
+				if (game.mouseOnCurrentHero()){
+					game.mode = "firing";
+				} else {
+					game.panTo(mouse.x + game.offsetLeft)
+			}
+			} else {
+				game.panTo(game.bowX);
+			}
+			}
 
      if (game.mode == "firing"){  
          if(mouse.down){
@@ -230,18 +229,19 @@ var game={
          //Vista panorámica donde el héroe se encuentra actualmente...
          var heroX = game.currentHero.GetPosition().x*box2d.scale;
          game.panTo(heroX);
-
+		 if(game.currentHero.m_linearVelocity.x==0){
+			 game.decelerating=250;
+		 }
          //Y esperar hasta que deja de moverse, está fuera de los límites o se mueve lentamente durante demasiado tiempo
-         if(game.currentHero.m_linearVelocity.x<2 && game.currentHero.m_xf.position.y>13) {
+         if(game.currentHero.m_linearVelocity.x<5 && game.currentHero.m_xf.position.y>13) {
              game.decelerating++;
          } else {
              game.decelerating = 0;
          }
 
-         if(!game.currentHero.IsAwake() || heroX<0 || heroX >game.currentLevel.foregroundImage.width || game.decelerating>350){
+         if(!game.currentHero.IsAwake() || heroX<0 || heroX >game.currentLevel.foregroundImage.width || game.decelerating>=250){
              // Luego borra el viejo héroe
              box2d.world.DestroyBody(game.currentHero);
-			 console.log("heroe destruido")
              game.currentHero = undefined;
              // Resetea el numero de veces que se desplaza lentamente
              game.decelerating = 0;
@@ -252,8 +252,6 @@ var game={
      
 
      if (game.mode == "load-next-hero"){
-         game.countHeroesAndVillains();
-
          // Comprobar si algún villano está vivo, si no, termine el nivel (éxito)
          if (game.villains.length == 0){
              game.mode = "level-success";
@@ -276,6 +274,12 @@ var game={
          } else {
              // Esperar a que el héroe deje de rebotar y se duerma y luego cambie a espera para disparar (wait-for-firing)
              game.panTo(game.bowX);
+			 game.currentHero = game.heroes[game.heroes.length-1];
+			 game.currentHero.SetPosition({x:180/box2d.scale,y:200/box2d.scale});
+			 game.currentHero.SetLinearVelocity({x:0,y:0});
+			 game.currentHero.SetAngularVelocity(0);
+			 game.currentHero.SetAwake(true);	
+			 game.mode = "wait-for-firing";	 
              if(!game.currentHero.IsAwake()){
                  game.mode = "wait-for-firing";
              }
@@ -341,17 +345,16 @@ var game={
 			if(entity){
 				var entityX = body.GetPosition().x*box2d.scale;
 				if(entityX<0|| entityX>game.currentLevel.foregroundImage.width||(entity.health && entity.health <0)){
-					if(game.mode=="intro"){
+					if(game.mode=="intro" && !isPowerup){
 						game.restartLevel();
 						
 					}
 					box2d.world.DestroyBody(body);
-					console.log("entidad destruida");
 					if (entity.type=="villain"){
 						game.score += (entity.points);
 						$('#score').html('Score: '+game.score);
 					}
-					if (entity.breakSound && game.mode!="intro"){
+					if (entity.breakSound && game.mode!="intro" && !isPowerup){
 						entity.breakSound.play();
 					}
 
@@ -723,7 +726,6 @@ var levels = {
                    {type:"villain", name:"bronze_knight",x:670,y:405,points:100},
                    {type:"villain", name:"bronze_knight",x:865,y:400,points:100},
    
-                   {type:"hero", name:"roca",x:30,y:415},
                    {type:"hero", name:"roca_pinchos",x:80,y:405},
                    {type:"hero", name:"roca_lava",x:140,y:405},
                ]
