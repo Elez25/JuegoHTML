@@ -649,26 +649,26 @@ var levels = {
 				{type:"ground", name:"dirt", x:500,y:440,width:1000,height:20,isStatic:true},
                 {type:"ground", name:"wood", x:185,y:390,width:30,height:80,isStatic:true},
 				
-				{type:"block", name:"ladrilloRojo", x:820,y:380,angle:90,width:100,height:25},
-				{type:"block", name:"ladrilloMarron", x:720,y:380,angle:90,width:100,height:25},
-				{type:"block", name:"ladrilloMarron", x:920,y:380,angle:90,width:100,height:25},
+				{type:"block", name:"ladrilloGris", x:720,y:380,angle:90,width:100,height:25},
+				{type:"block", name:"ladrilloMarron", x:620,y:380,angle:90,width:100,height:25},
+				{type:"block", name:"ladrilloMarron", x:820,y:380,angle:90,width:100,height:25},
+				{type:"block", name:"ladrilloGris", x:670,y:317.5,width:100,height:25},
 				{type:"block", name:"ladrilloGris", x:770,y:317.5,width:100,height:25},
-				{type:"block", name:"ladrilloGris", x:870,y:317.5,width:100,height:25},
 
-				{type:"block", name:"ladrilloBlanco", x:720,y:255,angle:90,width:100,height:25},
-                {type:"block", name:"ladrilloRojo", x:820,y:255,angle:90,width:100,height:25},
-				{type:"block", name:"ladrilloBlanco", x:920,y:255,angle:90,width:100,height:25},
-                {type:"block", name:"ladrilloGris", x:770,y:192.5,width:100,height:25},
-				{type:"block", name:"ladrilloGris", x:870,y:192.5,width:100,height:25},
+				{type:"block", name:"ladrilloGris", x:620,y:255,angle:90,width:100,height:25},
+                {type:"block", name:"ladrilloBlanco", x:720,y:255,angle:90,width:100,height:25},
+				{type:"block", name:"ladrilloGris", x:820,y:255,angle:90,width:100,height:25},
+                {type:"block", name:"ladrilloGris", x:670,y:192.5,width:100,height:25},
+				{type:"block", name:"ladrilloGris", x:770,y:192.5,width:100,height:25},
 
 				//Villano tercer piso
-				{type:"villain", name:"silver_knight",x:830,y:155,points:590},
+				{type:"villain", name:"silver_knight",x:730,y:155,points:590},
 				//Villanos segundo piso
+				{type:"villain", name:"black_knight",x:650,y:260,points:500},
 				{type:"villain", name:"black_knight",x:750,y:260,points:500},
-				{type:"villain", name:"black_knight",x:850,y:260,points:500},
 				//villano primer piso
-				{type:"villain", name:"bronze_knight",x:855,y:400,points:100},
 				{type:"villain", name:"bronze_knight",x:755,y:400,points:100},
+				{type:"villain", name:"bronze_knight",x:655,y:400,points:100},
 
 
 				{type:"hero", name:"roca",x:30,y:415},
@@ -776,7 +776,6 @@ var levels = {
 		var html = "";
 		totalLevels=new Array(levels.data.length);
 		var resultado = Math.round(levels.data.length/2);
-		console.log(resultado);
 		var j;
 		var i=0;
 		var f = 1;
@@ -1089,7 +1088,7 @@ var entities = {
             height:120,
             density:1,
             friction:0.5,
-            restitution:0.3,
+            restitution:0.1,
 		}
 	},
 	//Tomar la entidad, crear un cuerpo box2d y añadirlo al mundo
@@ -1288,13 +1287,15 @@ createCircle:function(entity,definition){
         }			
         var fixtureDef = new b2FixtureDef;
 		if(isPowerup){
-			fixtureDef.density = (definition.density)/2.5;
+			fixtureDef.density = (definition.density)/3.5;
+			fixtureDef.restitution = definition.restitution/3;
 		} else{
 			fixtureDef.density = definition.density;
+			fixtureDef.restitution = definition.restitution;
 		}
         
         fixtureDef.friction = definition.friction;
-        fixtureDef.restitution = definition.restitution;
+        
 
         fixtureDef.shape = new b2CircleShape(entity.radius/box2d.scale);
         
