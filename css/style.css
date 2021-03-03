@@ -30,9 +30,18 @@
     background: rgba(100,100,100,0.3);
 }
 
-#selbutton{
+#selbutton {
     display: flex;
+    flex-direction: column;
+    height: 80%;
+    
+}
+
+#fila1, #fila2{
+    display: flex;
+    flex-direction: row;
     justify-content: space-around;
+    margin-bottom: 5%;
 }
 
 #loadingmessage{
@@ -90,6 +99,10 @@
 #endingscreen{
     text-align: center;
     margin-top: 2%;
+}
+
+#endingscreen .menuButton{
+    width: 70%;
 }
 
 #levelselectscreen h3{
