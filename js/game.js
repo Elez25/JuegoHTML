@@ -182,11 +182,17 @@ var game={
 				}
 			}
 		}
+		console.log(game.heroes.length);
+		/*if((game.heroes.length<1) && (game.mode=="intro")){
+			game.restartLevel();
+		}*/
 	},
     handlePanning:function(){
-        if(game.mode=="intro"){		
+        if(game.mode=="intro"){	
+			console.log("estoy en intro")	
             if(game.panTo(700)){
                 game.mode = "load-next-hero";
+				console.log("esperando a cargar heroe");
             }			 
         }	   
 
@@ -235,6 +241,7 @@ var game={
          if(!game.currentHero.IsAwake() || heroX<0 || heroX >game.currentLevel.foregroundImage.width || game.decelerating>350){
              // Luego borra el viejo héroe
              box2d.world.DestroyBody(game.currentHero);
+			 console.log("heroe destruido")
              game.currentHero = undefined;
              // Resetea el numero de veces que se desplaza lentamente
              game.decelerating = 0;
@@ -334,16 +341,23 @@ var game={
 			if(entity){
 				var entityX = body.GetPosition().x*box2d.scale;
 				if(entityX<0|| entityX>game.currentLevel.foregroundImage.width||(entity.health && entity.health <0)){
+					if(game.mode=="intro"){
+						game.restartLevel();
+						
+					}
 					box2d.world.DestroyBody(body);
+					console.log("entidad destruida");
 					if (entity.type=="villain"){
-						game.score += (entity.points)
+						game.score += (entity.points);
 						$('#score').html('Score: '+game.score);
 					}
-					if (entity.breakSound){
+					if (entity.breakSound && game.mode!="intro"){
 						entity.breakSound.play();
 					}
+
+					
 				} else {
-					entities.draw(entity,body.GetPosition(),body.GetAngle())				
+					entities.draw(entity,body.GetPosition(),body.GetAngle());				
 				}	
 			}
 		}
