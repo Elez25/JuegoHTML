@@ -742,43 +742,43 @@ var levels = {
 
        
                 //torre izquierda   
-                {type:"block", name:"ladrilloGris", x:520,y:380,angle:90,width:100,height:25},
-                {type:"block", name:"ladrilloGris", x:620,y:380,angle:90,width:100,height:25},
-				{type:"block", name:"ladrilloGris", x:570,y:317.5,width:100,height:25},
-				{type:"villain", name:"silver_knight",x:570,y:380,points:250},
+                {type:"block", name:"ladrilloGris", x:525,y:380,angle:90,width:100,height:25},
+                {type:"block", name:"ladrilloGris", x:625,y:380,angle:90,width:100,height:25},
+				{type:"block", name:"ladrilloGris", x:575,y:317.5,width:100,height:25},
+				{type:"villain", name:"silver_knight",x:575,y:380,points:250},
                    				
-   				{type:"block", name:"ladrilloRojo", x:520,y:255,angle:90,width:100,height:25},
-                {type:"block", name:"ladrilloRojo", x:620,y:255,angle:90,width:100,height:25},
-                {type:"block", name:"ladrilloMarron", x:570,y:192.5,width:100,height:25},
-				{type:"villain", name:"bronze_knight",x:570,y:255,points:100},
+   				{type:"block", name:"ladrilloRojo", x:525,y:255,angle:90,width:100,height:25},
+                {type:"block", name:"ladrilloRojo", x:625,y:255,angle:90,width:100,height:25},
+                {type:"block", name:"ladrilloMarron", x:575,y:192.5,width:100,height:25},
+				{type:"villain", name:"bronze_knight",x:575,y:255,points:100},
 
-				{type:"block", name:"ladrilloRojo", x:520,y:140,angle:90,width:100,height:25},
-				{type:"block", name:"ladrilloRojo", x:620,y:140,angle:90,width:100,height:25},
-				{type:"block", name:"ladrilloMarron", x:570,y:77,width:100,height:25},
-				{type:"villain", name:"black_knight",x:570,y:140,points:500},
+				{type:"block", name:"ladrilloRojo", x:525,y:140,angle:90,width:100,height:25},
+				{type:"block", name:"ladrilloRojo", x:625,y:140,angle:90,width:100,height:25},
+				{type:"block", name:"ladrilloMarron", x:575,y:77,width:100,height:25},
+				{type:"villain", name:"black_knight",x:575,y:140,points:500},
 
 				//torre derecha   
-                {type:"block", name:"ladrilloGris", x:830,y:380,angle:90,width:100,height:25},
-                {type:"block", name:"ladrilloGris", x:930,y:380,angle:90,width:100,height:25},
-				{type:"block", name:"ladrilloGris", x:880,y:317.5,width:100,height:25},
-				{type:"villain", name:"silver_knight",x:880,y:380,points:250},
+                {type:"block", name:"ladrilloGris", x:840,y:380,angle:90,width:100,height:25},
+                {type:"block", name:"ladrilloGris", x:940,y:380,angle:90,width:100,height:25},
+				{type:"block", name:"ladrilloGris", x:890,y:317.5,width:100,height:25},
+				{type:"villain", name:"silver_knight",x:890,y:380,points:250},
                    				
-   				{type:"block", name:"ladrilloRojo", x:830,y:255,angle:90,width:100,height:25},
-                {type:"block", name:"ladrilloRojo", x:930,y:255,angle:90,width:100,height:25},
-                {type:"block", name:"ladrilloMarron", x:880,y:192.5,width:100,height:25},
-				{type:"villain", name:"bronze_knight",x:880,y:255,points:100},
+   				{type:"block", name:"ladrilloRojo", x:840,y:255,angle:90,width:100,height:25},
+                {type:"block", name:"ladrilloRojo", x:940,y:255,angle:90,width:100,height:25},
+                {type:"block", name:"ladrilloMarron", x:890,y:192.5,width:100,height:25},
+				{type:"villain", name:"bronze_knight",x:890,y:255,points:100},
 				   
-				{type:"block", name:"ladrilloRojo", x:830,y:140,angle:90,width:100,height:25},
-				{type:"block", name:"ladrilloRojo", x:930,y:140,angle:90,width:100,height:25},
-				{type:"block", name:"ladrilloMarron", x:880,y:77,width:100,height:25},
-				{type:"villain", name:"black_knight",x:880,y:140,points:500},
+				{type:"block", name:"ladrilloRojo", x:840,y:140,angle:90,width:100,height:25},
+				{type:"block", name:"ladrilloRojo", x:940,y:140,angle:90,width:100,height:25},
+				{type:"block", name:"ladrilloMarron", x:890,y:77,width:100,height:25},
+				{type:"villain", name:"black_knight",x:890,y:140,points:500},
 
 				//zona Boss
-				{type:"block", name:"ladrilloGris", x:650,y:370,angle:90,width:150,height:35},
-				{type:"block", name:"ladrilloGris", x:790,y:370,angle:90,width:150,height:35},
-				{type:"block", name:"ladrilloGris", x:720,y:307,width:160,height:25},
-				{type:"villain", name:"black_knight",x:720,y:250,points:500},
-				{type:"villain", name:"boss",x:720,y:380,points:5000},	
+				{type:"block", name:"ladrilloGris", x:660,y:370,angle:90,width:150,height:35},
+				{type:"block", name:"ladrilloGris", x:800,y:370,angle:90,width:150,height:35},
+				{type:"block", name:"ladrilloGris", x:730,y:307,width:160,height:25},
+				{type:"villain", name:"black_knight",x:730,y:250,points:500},
+				{type:"villain", name:"boss",x:730,y:380,points:5000},	
 
 				{type:"hero", name:"roca_cadena",x:30,y:415},
 				{type:"hero", name:"roca_pinchos",x:80,y:405},
@@ -1015,24 +1015,24 @@ var entities = {
         },
 		"ladrilloRojo":{
 			fullHealth:600,
-            density:2.4,
+            density:1.0,
             friction:0.4,
             restitution:0.15,
 		},
 		"ladrilloMarron":{
-			fullHealth:700,
-            density:3.4,
+			fullHealth:300,
+            density:1.0,
             friction:0.4,
             restitution:0.15,
 		},
 		"ladrilloBlanco":{
 			fullHealth:200,
-            density:2.4,
+            density:0.7,
             friction:0.4,
             restitution:0.15,
 		},
 		"ladrilloGris":{
-			fullHealth:1000,
+			fullHealth:500,
             density:2.4,
             friction:0.4,
             restitution:0.15,
@@ -1134,7 +1134,7 @@ var entities = {
 				entity.shape = definition.shape;
 				if(definition.shape == "circle"){
 					if(isPowerup){
-						entity.radius = definition.radius*1.4;
+						entity.radius = definition.radius*1.3;
 					}
 					else{
 						entity.radius = definition.radius;
