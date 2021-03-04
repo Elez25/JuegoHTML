@@ -396,7 +396,9 @@ var game={
 			if((level+1)!=levels.data.length+1){
 				var buttonNextLevel = document.getElementById('button'+(level+1));
 				buttonNextLevel.disabled = false;
-				buttonNextLevel.style.cssText='background: #F78900';
+				if(totalLevels[game.currentLevel.number+1]==0){
+					buttonNextLevel.style.cssText='background: #F78900';
+				}
 			}
 			var multiplicador = heroesLeft+1;
 			if(totalLevels[game.currentLevel.number]<this.score*multiplicador){
