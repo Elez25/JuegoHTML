@@ -394,9 +394,9 @@ var game={
 			var buttonCurrentLevel= document.getElementById('button'+level);
 			buttonCurrentLevel.style.cssText='background: #3cd31e;';
 			if((level+1)!=levels.data.length+1){
-				var buttonNextLevel = document.getElementById('button'+(level+1));
-				buttonNextLevel.disabled = false;
 				if(totalLevels[game.currentLevel.number+1]==0){
+					var buttonNextLevel = document.getElementById('button'+(level+1));
+					buttonNextLevel.disabled = false;
 					buttonNextLevel.style.cssText='background: #F78900';
 				}
 			}
