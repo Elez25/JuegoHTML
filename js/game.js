@@ -55,8 +55,11 @@ var game={
 		game.bowReleasedSound = loader.loadSound("audio/released");
 		game.bounceSound = loader.loadSound('audio/bounce');
 		game.breakSound = {
-			"glass":loader.loadSound('audio/glassbreak'),
+			"ladrilloBlanco":loader.loadSound('audio/glassbreak'),
 			"ladrilloMarron":loader.loadSound('audio/woodbreak'),
+			"ladrilloRojo":loader.loadSound('audio/ladrilloRojobreak'),
+			"ladrilloGris":loader.loadSound('audio/ladrilloGrisbreak'),
+
 		};
 
 
@@ -381,6 +384,9 @@ var game={
         game.stopBackgroundMusic();	
 		$('#backrestart').hide();	
 		$('#restart').hide();
+		for(var body= box2d.world.GetBodyList();body; body=body.GetNext()){
+			box2d.world.DestroyBody(body);
+		}
         if (game.mode=="level-success"){
 			var heroesLeft = game.heroes.length;
 			var level = game.currentLevel.number+1;
@@ -1014,7 +1020,7 @@ var entities = {
             restitution:0.2,
         },
 		"ladrilloRojo":{
-			fullHealth:600,
+			fullHealth:400,
             density:1.0,
             friction:0.4,
             restitution:0.15,
@@ -1033,7 +1039,7 @@ var entities = {
 		},
 		"ladrilloGris":{
 			fullHealth:500,
-            density:2.4,
+            density:1.5,
             friction:0.4,
             restitution:0.15,
 		},
@@ -1060,15 +1066,15 @@ var entities = {
 			shape:"circle",
 			radius:25,
             density:2,
-            friction:0.2,
-            restitution:0.3,
+            friction:0.4,
+            restitution:0.4,
 		},
 		"roca_pinchos":{
 			shape:"circle",
 			radius:25,
             density:2.5,
             friction:1.2,
-            restitution:0.2,
+            restitution:0.4,
 		},
 		"black_knight":{
             shape:"rectangle",
@@ -1099,7 +1105,7 @@ var entities = {
         },
 		"boss":{
 			shape:"rectangle",
-            fullHealth:500,
+            fullHealth:400,
             width:80,
             height:120,
             density:1,
