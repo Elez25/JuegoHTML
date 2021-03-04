@@ -51,12 +51,13 @@ var game={
 		game.backgroundMusic = loader.loadSound('audio/medieval');
 		game.mouseover = loader.loadSound('audio/mouseover');
 		game.click = loader.loadSound('audio/click');
+		game.victory = loader.loadSound('audio/victory');
+		game.failure = loader.loadSound('audio/failure');
 
 		game.bowReleasedSound = loader.loadSound("audio/released");
-		game.bounceSound = loader.loadSound('audio/bounce');
 		game.breakSound = {
-			"ladrilloBlanco":loader.loadSound('audio/glassbreak'),
-			"ladrilloMarron":loader.loadSound('audio/woodbreak'),
+			"ladrilloBlanco":loader.loadSound('audio/ladrilloBlancobreak'),
+			"ladrilloMarron":loader.loadSound('audio/ladrilloMarronbreak'),
 			"ladrilloRojo":loader.loadSound('audio/ladrilloRojobreak'),
 			"ladrilloGris":loader.loadSound('audio/ladrilloGrisbreak'),
 
@@ -80,6 +81,8 @@ var game={
 		game.stopBackgroundMusic();
 		window.cancelAnimationFrame(game.animationFrame);		
 		game.lastUpdateTime = undefined;
+		game.failure.pause();
+		game.victory.pause();
     },
 
 	showMenu:function(){
@@ -255,6 +258,7 @@ var game={
      
 
      if (game.mode == "load-next-hero"){
+		 game.countHeroesAndVillains();
          // Comprobar si algún villano está vivo, si no, termine el nivel (éxito)
          if (game.villains.length == 0){
              game.mode = "level-success";
@@ -277,12 +281,7 @@ var game={
          } else {
              // Esperar a que el héroe deje de rebotar y se duerma y luego cambie a espera para disparar (wait-for-firing)
              game.panTo(game.bowX);
-			 game.currentHero = game.heroes[game.heroes.length-1];
-			 game.currentHero.SetPosition({x:180/box2d.scale,y:200/box2d.scale});
-			 game.currentHero.SetLinearVelocity({x:0,y:0});
-			 game.currentHero.SetAngularVelocity(0);
-			 game.currentHero.SetAwake(true);	
-			 game.mode = "wait-for-firing";	 
+
              if(!game.currentHero.IsAwake()){
                  game.mode = "wait-for-firing";
              }
@@ -348,7 +347,7 @@ var game={
 			if(entity){
 				var entityX = body.GetPosition().x*box2d.scale;
 				if(entityX<0|| entityX>game.currentLevel.foregroundImage.width||(entity.health && entity.health <0)){
-					if(game.mode=="intro" && !isPowerup){
+					if(game.mode=="intro"){
 						game.restartLevel();
 						
 					}
@@ -357,7 +356,7 @@ var game={
 						game.score += (entity.points);
 						$('#score').html('Score: '+game.score);
 					}
-					if (entity.breakSound && game.mode!="intro" && !isPowerup){
+					if (entity.breakSound && game.mode!="intro"){
 						entity.breakSound.play();
 					}
 
@@ -388,6 +387,8 @@ var game={
 			box2d.world.DestroyBody(body);
 		}
         if (game.mode=="level-success"){
+			game.victory.currentTime = 0
+			game.victory.play();
 			var heroesLeft = game.heroes.length;
 			var level = game.currentLevel.number+1;
 			var buttonCurrentLevel= document.getElementById('button'+level);
@@ -427,7 +428,9 @@ var game={
                 $('#endingmessage').html('GAME COMPLETED');
                 $("#playnextlevel").hide();
             }
-        } else if (game.mode=="level-failure"){			
+        } else if (game.mode=="level-failure"){
+			game.failure.currentTime = 0
+			game.failure.play();
             $('#endingmessage').html('LEVEL FAILED');
 			endingmessage.style.cssText= '-webkit-text-fill-color: #FA0F08;';
             $("#recordmessage").text('');
@@ -492,6 +495,8 @@ var game={
 		levels.load(game.currentLevel.number);
 		$('#backrestart').show();
 		$('#restart').show();
+		game.failure.pause();
+		game.victory.pause();
 	},
 	startNextLevel:function(){
 		window.cancelAnimationFrame(game.animationFrame);		
@@ -499,6 +504,8 @@ var game={
 		levels.load(game.currentLevel.number+1);
 		$('#backrestart').show();
 		$('#restart').show();
+		game.failure.pause();
+		game.victory.pause();
 	},
 
     startBackgroundMusic:function(){
@@ -626,13 +633,11 @@ var levels = {
 				{type:"block", name:"ladrilloMarron", x:820,y:380,angle:90,width:100,height:25},
 				{type:"block", name:"ladrilloMarron", x:820,y:280,angle:90,width:100,height:25},		
 
-				{type:"villain", name:"silver_knight",x:710,y:360,points:250},
+				{type:"villain", name:"silver_knight",x:710,y:400,points:250},
+				{type:"villain", name:"silver_knight",x:740,y:400,points:250},
 				{type:"villain", name:"bronze_knight",x:620,y:200,points:100},
-				{type:"villain", name:"silver_knight",x:740,y:360,points:250},
 				{type:"villain", name:"bronze_knight",x:820,y:200,points:100},
 				
-				
-
 				{type:"hero", name:"roca_lava",x:80,y:405},
 				{type:"hero", name:"roca_cadena",x:140,y:405},
 			]
@@ -653,12 +658,12 @@ var levels = {
                    {type:"block", name:"ladrilloGris", x:670,y:255,angle:90,width:100,height:25},
                    {type:"block", name:"ladrilloGris", x:770,y:255,angle:90,width:100,height:25},
                    {type:"block", name:"ladrilloBlanco", x:720,y:192.5,width:100,height:25},	
-   
-                   {type:"villain", name:"black_knight",x:715,y:155,points:500},
-				   {type:"villain", name:"black_knight",x:715,y:260,points:500},
-                   {type:"villain", name:"bronze_knight",x:670,y:405,points:100},
-                   {type:"villain", name:"silver_knight",x:765,y:400,points:250},
-   
+
+				   {type:"villain", name:"bronze_knight",x:670,y:405,points:100},
+				   {type:"villain", name:"black_knight",x:715,y:280,points:500},
+				   {type:"villain", name:"black_knight",x:715,y:155,points:500},
+				   {type:"villain", name:"silver_knight",x:765,y:400,points:250},
+
                    {type:"hero", name:"roca",x:30,y:415},
                    {type:"hero", name:"roca_pinchos",x:80,y:405},
                    {type:"hero", name:"roca_lava",x:140,y:405},
@@ -684,15 +689,14 @@ var levels = {
                 {type:"block", name:"ladrilloGris", x:670,y:192.5,width:100,height:25},
 				{type:"block", name:"ladrilloGris", x:770,y:192.5,width:100,height:25},
 
-				//Villano tercer piso
-				{type:"villain", name:"silver_knight",x:730,y:155,points:590},
-				//Villanos segundo piso
-				{type:"villain", name:"black_knight",x:650,y:260,points:500},
-				{type:"villain", name:"black_knight",x:750,y:260,points:500},
 				//villano primer piso
 				{type:"villain", name:"bronze_knight",x:755,y:400,points:100},
 				{type:"villain", name:"bronze_knight",x:655,y:400,points:100},
-
+				//Villanos segundo piso
+				{type:"villain", name:"black_knight",x:650,y:285,points:500},
+				{type:"villain", name:"black_knight",x:750,y:285,points:500},
+				//Villano tercer piso
+				{type:"villain", name:"silver_knight",x:730,y:155,points:590},
 
 				{type:"hero", name:"roca",x:30,y:415},
                 {type:"hero", name:"roca_pinchos",x:80,y:405},
@@ -725,13 +729,13 @@ var levels = {
 				   {type:"block", name:"ladrilloGris", x:740,y:140,angle:90,width:100,height:25},
 				   {type:"block", name:"ladrilloGris", x:830,y:140,angle:90,width:100,height:25},
 				   {type:"block", name:"ladrilloGris", x:775,y:77,width:100,height:25},
-   
-                   {type:"villain", name:"black_knight",x:765,y:155,points:500},
-				   {type:"villain", name:"silver_knight",x:700,y:260,points:250},
-				   {type:"villain", name:"silver_knight",x:800,y:260,points:250},
-                   {type:"villain", name:"bronze_knight",x:670,y:405,points:100},
-                   {type:"villain", name:"bronze_knight",x:865,y:400,points:100},
-   
+
+				   {type:"villain", name:"black_knight",x:765,y:155,points:500},
+				   {type:"villain", name:"silver_knight",x:700,y:270,points:250},
+				   {type:"villain", name:"silver_knight",x:800,y:270,points:250},
+				   {type:"villain", name:"bronze_knight",x:670,y:405,points:100},
+				   {type:"villain", name:"bronze_knight",x:865,y:400,points:100},
+
                    {type:"hero", name:"roca_pinchos",x:80,y:405},
                    {type:"hero", name:"roca_lava",x:140,y:405},
                ]
@@ -748,41 +752,41 @@ var levels = {
 
        
                 //torre izquierda   
-                {type:"block", name:"ladrilloGris", x:525,y:380,angle:90,width:100,height:25},
-                {type:"block", name:"ladrilloGris", x:625,y:380,angle:90,width:100,height:25},
-				{type:"block", name:"ladrilloGris", x:575,y:317.5,width:100,height:25},
-				{type:"villain", name:"silver_knight",x:575,y:380,points:250},
+                {type:"block", name:"ladrilloMarron", x:525,y:380,angle:90,width:100,height:25},
+                {type:"block", name:"ladrilloMarron", x:625,y:380,angle:90,width:100,height:25},
+				{type:"block", name:"ladrilloBlanco", x:575,y:317.5,width:100,height:25},
+				{type:"villain", name:"silver_knight",x:575,y:405,points:250},
                    				
-   				{type:"block", name:"ladrilloRojo", x:525,y:255,angle:90,width:100,height:25},
-                {type:"block", name:"ladrilloRojo", x:625,y:255,angle:90,width:100,height:25},
-                {type:"block", name:"ladrilloMarron", x:575,y:192.5,width:100,height:25},
-				{type:"villain", name:"bronze_knight",x:575,y:255,points:100},
+   				{type:"block", name:"ladrilloMarron", x:525,y:255,angle:90,width:100,height:25},
+                {type:"block", name:"ladrilloMarron", x:625,y:255,angle:90,width:100,height:25},
+                {type:"block", name:"ladrilloBlanco", x:575,y:192.5,width:100,height:25},
+				{type:"villain", name:"bronze_knight",x:575,y:285,points:100},
 
-				{type:"block", name:"ladrilloRojo", x:525,y:140,angle:90,width:100,height:25},
-				{type:"block", name:"ladrilloRojo", x:625,y:140,angle:90,width:100,height:25},
-				{type:"block", name:"ladrilloMarron", x:575,y:77,width:100,height:25},
-				{type:"villain", name:"black_knight",x:575,y:140,points:500},
+				{type:"block", name:"ladrilloMarron", x:525,y:140,angle:90,width:100,height:25},
+				{type:"block", name:"ladrilloMarron", x:625,y:140,angle:90,width:100,height:25},
+				{type:"block", name:"ladrilloBlanco", x:575,y:77,width:100,height:25},
+				{type:"villain", name:"black_knight",x:575,y:150,points:500},
 
 				//torre derecha   
-                {type:"block", name:"ladrilloGris", x:840,y:380,angle:90,width:100,height:25},
-                {type:"block", name:"ladrilloGris", x:940,y:380,angle:90,width:100,height:25},
-				{type:"block", name:"ladrilloGris", x:890,y:317.5,width:100,height:25},
-				{type:"villain", name:"silver_knight",x:890,y:380,points:250},
+                {type:"block", name:"ladrilloMarron", x:840,y:380,angle:90,width:100,height:25},
+                {type:"block", name:"ladrilloMarron", x:940,y:380,angle:90,width:100,height:25},
+				{type:"block", name:"ladrilloBlanco", x:890,y:317.5,width:100,height:25},
+				{type:"villain", name:"silver_knight",x:890,y:405,points:250},
                    				
-   				{type:"block", name:"ladrilloRojo", x:840,y:255,angle:90,width:100,height:25},
-                {type:"block", name:"ladrilloRojo", x:940,y:255,angle:90,width:100,height:25},
-                {type:"block", name:"ladrilloMarron", x:890,y:192.5,width:100,height:25},
-				{type:"villain", name:"bronze_knight",x:890,y:255,points:100},
+   				{type:"block", name:"ladrilloMarron", x:840,y:255,angle:90,width:100,height:25},
+                {type:"block", name:"ladrilloMarron", x:940,y:255,angle:90,width:100,height:25},
+                {type:"block", name:"ladrilloBlanco", x:890,y:192.5,width:100,height:25},
+				{type:"villain", name:"bronze_knight",x:890,y:285,points:100},
 				   
-				{type:"block", name:"ladrilloRojo", x:840,y:140,angle:90,width:100,height:25},
-				{type:"block", name:"ladrilloRojo", x:940,y:140,angle:90,width:100,height:25},
-				{type:"block", name:"ladrilloMarron", x:890,y:77,width:100,height:25},
-				{type:"villain", name:"black_knight",x:890,y:140,points:500},
+				{type:"block", name:"ladrilloMarron", x:840,y:140,angle:90,width:100,height:25},
+				{type:"block", name:"ladrilloMarron", x:940,y:140,angle:90,width:100,height:25},
+				{type:"block", name:"ladrilloBlanco", x:890,y:77,width:100,height:25},
+				{type:"villain", name:"black_knight",x:890,y:150,points:500},
 
 				//zona Boss
 				{type:"block", name:"ladrilloGris", x:660,y:370,angle:90,width:150,height:35},
 				{type:"block", name:"ladrilloGris", x:800,y:370,angle:90,width:150,height:35},
-				{type:"block", name:"ladrilloGris", x:730,y:307,width:160,height:25},
+				{type:"block", name:"ladrilloMarron", x:730,y:307,width:160,height:25},
 				{type:"villain", name:"black_knight",x:730,y:250,points:500},
 				{type:"villain", name:"boss",x:730,y:380,points:5000},	
 
@@ -810,7 +814,7 @@ var levels = {
 					html +=   '<button id="button'+(i+1)+'">'+(i+1)+'<span></span><span></span><span></span><span</span></button>'
 				}
 				else{
-					html +=   '<button id="button'+(i+1)+'">'+(i+1)+'<span></span><span></span><span></span><span</span></button>'
+					html +=   '<button disabled id="button'+(i+1)+'">'+(i+1)+'<span></span><span></span><span></span><span</span></button>'
 				}	
 				//Inicializamos el maximo score de cada nivel
 				totalLevels[i] = 0;
@@ -829,12 +833,14 @@ var levels = {
 		
 		// Establecer los controladores de eventos de clic de botón para cargar el nivel
 		$('#selbutton button').click(function(){
-			game.click.play();
-			var level = $(this).text();
-			levels.load(level-1);
-			$('#levelselectscreen').hide();
-			$('#backrestart').show();
-			$('#restart').show();
+
+				game.click.play();
+				var level = $(this).text();
+				levels.load(level-1);
+				$('#levelselectscreen').hide();
+				$('#backrestart').show();
+				$('#restart').show();
+
 		});
 
 		$('button').mouseover(function(){
@@ -872,7 +878,7 @@ var levels = {
 	load:function(number){
         //Inicializar box2d world cada vez que se carga un nivel
          box2d.init();
- 
+ 		 game.bounceSound = loader.loadSound('audio/bounce'+typeVillain);
          // Declarar un nuevo objeto de nivel actual
          game.currentLevel = {number:number,hero:[]};
          game.score=0;
@@ -1074,7 +1080,7 @@ var entities = {
 			radius:25,
             density:2.5,
             friction:1.2,
-            restitution:0.4,
+            restitution:0.3,
 		},
 		"black_knight":{
             shape:"rectangle",
@@ -1105,7 +1111,7 @@ var entities = {
         },
 		"boss":{
 			shape:"rectangle",
-            fullHealth:400,
+            fullHealth:350,
             width:80,
             height:120,
             density:1,

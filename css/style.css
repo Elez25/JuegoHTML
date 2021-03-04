@@ -7,6 +7,14 @@
     margin: 0 auto;
 }
 
+#gamedebug{
+    width: 1000px;
+    height: 480px;
+    border: 5px solid#F78900;
+    margin: 0 auto;
+    background: wheat;
+}
+
 .gamelayer{
     width: 640px;
     height: 480px;
@@ -690,4 +698,44 @@ body{
     margin-left:3%;
     color: #3cd31e;
     -webkit-text-stroke: 2px rgb(0, 0, 0);
+}
+
+
+body h1{
+    font-family: 'Rubik', sans-serif;
+    font-size: 25px;
+    text-shadow:  0 0 10px black;
+    text-align: center;
+    -webkit-text-fill-color: #F78900;
+    -webkit-text-stroke: 1px rgb(255, 255, 255);
+    -webkit-transform:scale(1.3);transform:scale(1.3);
+    text-align: center;
+    margin:auto;
+    margin-bottom: 5px;
+    margin-top:5px;
+}
+body{
+    background: url(../images/webpage-background.jpeg);
+    background-size: cover;
+}
+
+p.footer1 {
+    
+    -webkit-text-fill-color: #F78900;
+    -webkit-text-stroke: 0.5px rgb(0, 0, 0);
+    -webkit-transform:scale(1.3);transform:scale(1.3);
+    font-family: 'Rubik', sans-serif;
+    font-size: 20px;
+    text-shadow:  0 0 10px black;
+    text-align: center;
+}
+
+p.footer2 {
+    -webkit-text-fill-color: #d1c2bd;
+    -webkit-text-stroke: 0.5px rgb(0, 0, 0);
+    -webkit-transform:scale(1.3);transform:scale(1.3);
+    font-family: 'Rubik', sans-serif;
+    font-size: 20px;
+    text-shadow:  0 0 10px black;
+    text-align: center;
 }
