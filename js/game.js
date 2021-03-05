@@ -349,18 +349,20 @@ var game={
 				var entityX = body.GetPosition().x*box2d.scale;
 				if(entityX<0|| entityX>game.currentLevel.foregroundImage.width||(entity.health && entity.health <0)){
 					if(game.mode=="intro"){
-						game.restartLevel();
+						//evita la destruccion total del nivel que pasa de forma aleatoria aleatoria 
+						
 						
 					}
+					else{
 					box2d.world.DestroyBody(body);
 					if (entity.type=="villain"){
 						game.score += (entity.points);
 						$('#score').html('Score: '+game.score);
 					}
-					if (entity.breakSound && game.mode!="intro"){
+					/*if (entity.breakSound && game.mode!="intro"){
 						entity.breakSound.play();
-					}
-
+					}*/
+				}
 					
 				} else {
 					entities.draw(entity,body.GetPosition(),body.GetAngle());				
@@ -1108,7 +1110,7 @@ var entities = {
             fullHealth:70,
             width:60,
             height:80,
-            density:0.8,
+            density:1,
             friction:0.5,
             restitution:0.6,
         },
