@@ -359,9 +359,7 @@ var game={
 						game.score += (entity.points);
 						$('#score').html('Score: '+game.score);
 					}
-					/*if (entity.breakSound && game.mode!="intro"){
-						entity.breakSound.play();
-					}*/
+
 				}
 					
 				} else {
