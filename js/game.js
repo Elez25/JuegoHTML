@@ -53,6 +53,7 @@ var game={
 		game.click = loader.loadSound('audio/click');
 		game.victory = loader.loadSound('audio/victory');
 		game.failure = loader.loadSound('audio/failure');
+		game.boss = loader.loadSound('audio/boss');
 
 		game.bowReleasedSound = loader.loadSound("audio/released");
 		game.breakSound = {
@@ -1257,14 +1258,20 @@ var box2d = {
 					entity2.health -= impulseAlongNormal;
 				}	
 		
-				// Si los objetos tienen un sonido de rebote, reproducirlos				
-				if (entity1.bounceSound){
-					entity1.bounceSound.play();
+				// Si los objetos tienen un sonido de rebote, reproducirlos
+				if(entity1.name=="boss" || entity2.name=="boss"){
+					game.boss.play();
+				}		
+				else{
+					if (entity1.bounceSound){
+						entity1.bounceSound.play();
+					}
+	
+					if (entity2.bounceSound){
+						entity2.bounceSound.play();
+					}
 				}
 
-				if (entity2.bounceSound){
-					entity2.bounceSound.play();
-				}
 			} 
 		};
 		box2d.world.SetContactListener(listener);
