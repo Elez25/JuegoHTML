@@ -359,7 +359,9 @@ var game={
 						game.score += (entity.points);
 						$('#score').html('Score: '+game.score);
 					}
-
+					if(entity.breakSound){
+						entity.breakSound.play();
+					}
 				}
 					
 				} else {
@@ -553,11 +555,11 @@ var levels = {
    
                {type:"block", name:"ladrilloRojo", x:720,y:380,angle:90,width:100,height:25},
                {type:"block", name:"ladrilloMarron", x:720,y:280,angle:90,width:100,height:25},								
-               {type:"villain", name:"black_knight",x:715,y:205,points:500},
+               {type:"villain", name:"black_knight",x:715,y:205,points:300},
    
                {type:"block", name:"ladrilloMarron", x:820,y:380,angle:90,width:100,height:25},
                {type:"block", name:"ladrilloRojo", x:820,y:280,angle:90,width:100,height:25},								
-               {type:"villain", name:"black_knight",x:815,y:205,points:500},
+               {type:"villain", name:"black_knight",x:815,y:205,points:300},
 			   			
    
                {type:"hero", name:"roca",x:80,y:405},
@@ -574,23 +576,23 @@ var levels = {
 
 				{type:"block", name:"ladrilloMarron", x:620,y:380,angle:90,width:100,height:25},
 				{type:"block", name:"ladrilloRojo", x:620,y:280,angle:90,width:100,height:25},								
-				{type:"villain", name:"black_knight",x:615,y:205,points:500},
+				{type:"villain", name:"black_knight",x:615,y:205,points:300},
 	
 				{type:"block", name:"ladrilloRojo", x:720,y:380,angle:90,width:100,height:25},
 				{type:"block", name:"ladrilloMarron", x:720,y:280,angle:90,width:100,height:25},								
-				{type:"villain", name:"black_knight",x:715,y:205,points:500},
+				{type:"villain", name:"black_knight",x:715,y:205,points:300},
 	
 				{type:"block", name:"ladrilloMarron", x:820,y:380,angle:90,width:100,height:25},
 				{type:"block", name:"ladrilloRojo", x:820,y:280,angle:90,width:100,height:25},								
-				{type:"villain", name:"black_knight",x:815,y:205,points:500},
+				{type:"villain", name:"black_knight",x:815,y:205,points:300},
 
 				{type:"hero", name:"roca_cadena",x:80,y:405},
 				{type:"hero", name:"roca",x:140,y:405},
 			]
 		 },
 		 {   // Tercer nivel 
-			foreground:'front_decor_1',
-			background:'game_background_2',
+			foreground:'front_decor_3',
+			background:'game_background_5',
 			entities:[
 				{type:"ground", name:"dirt", x:500,y:440,width:1000,height:20,isStatic:true},
 				{type:"ground", name:"wood", x:185,y:390,width:30,height:80,isStatic:true},
@@ -609,7 +611,7 @@ var levels = {
 				{type:"block", name:"ladrilloMarron", x:820,y:280,angle:90,width:100,height:25},		
 
 				{type:"villain", name:"bronze_knight",x:620,y:200,points:100},
-				{type:"villain", name:"silver_knight",x:720,y:200,points:250},
+				{type:"villain", name:"silver_knight",x:720,y:200,points:200},
 				{type:"villain", name:"bronze_knight",x:820,y:200,points:100},
 				
 
@@ -619,7 +621,7 @@ var levels = {
 			]
 		 },
 		 {   // Cuarto nivel 
-			foreground:'front_decor_1',
+			foreground:'front_decor_2',
 			background:'game_background_2',
 			entities:[
 				{type:"ground", name:"dirt", x:500,y:440,width:1000,height:20,isStatic:true},
@@ -636,8 +638,8 @@ var levels = {
 				{type:"block", name:"ladrilloMarron", x:820,y:380,angle:90,width:100,height:25},
 				{type:"block", name:"ladrilloMarron", x:820,y:280,angle:90,width:100,height:25},		
 
-				{type:"villain", name:"silver_knight",x:710,y:400,points:250},
-				{type:"villain", name:"silver_knight",x:740,y:400,points:250},
+				{type:"villain", name:"silver_knight",x:710,y:400,points:200},
+				{type:"villain", name:"silver_knight",x:740,y:400,points:200},
 				{type:"villain", name:"bronze_knight",x:620,y:200,points:100},
 				{type:"villain", name:"bronze_knight",x:820,y:200,points:100},
 				
@@ -646,8 +648,8 @@ var levels = {
 			]
 		 },
            {   // Quinto nivel
-			foreground:'front_decor_2',
-			background:'game_background_2',
+			foreground:'front_decor_1',
+			background:'game_background_1',
                entities:[
                    {type:"ground", name:"dirt", x:500,y:440,width:1000,height:20,isStatic:true},
                    {type:"ground", name:"wood", x:185,y:390,width:30,height:80,isStatic:true},
@@ -663,9 +665,9 @@ var levels = {
                    {type:"block", name:"ladrilloBlanco", x:720,y:192.5,width:100,height:25},	
 
 				   {type:"villain", name:"bronze_knight",x:670,y:405,points:100},
-				   {type:"villain", name:"black_knight",x:715,y:280,points:500},
-				   {type:"villain", name:"black_knight",x:715,y:155,points:500},
-				   {type:"villain", name:"silver_knight",x:765,y:400,points:250},
+				   {type:"villain", name:"black_knight",x:715,y:280,points:300},
+				   {type:"villain", name:"black_knight",x:715,y:155,points:300},
+				   {type:"villain", name:"silver_knight",x:765,y:400,points:200},
 
                    {type:"hero", name:"roca",x:30,y:415},
                    {type:"hero", name:"roca_pinchos",x:80,y:405},
@@ -696,10 +698,10 @@ var levels = {
 				{type:"villain", name:"bronze_knight",x:755,y:400,points:100},
 				{type:"villain", name:"bronze_knight",x:655,y:400,points:100},
 				//Villanos segundo piso
-				{type:"villain", name:"black_knight",x:650,y:285,points:500},
-				{type:"villain", name:"black_knight",x:750,y:285,points:500},
+				{type:"villain", name:"black_knight",x:650,y:285,points:300},
+				{type:"villain", name:"black_knight",x:750,y:285,points:300},
 				//Villano tercer piso
-				{type:"villain", name:"silver_knight",x:730,y:155,points:590},
+				{type:"villain", name:"silver_knight",x:730,y:155,points:200},
 
 				{type:"hero", name:"roca",x:30,y:415},
                 {type:"hero", name:"roca_pinchos",x:80,y:405},
@@ -733,9 +735,9 @@ var levels = {
 				   {type:"block", name:"ladrilloGris", x:830,y:140,angle:90,width:100,height:25},
 				   {type:"block", name:"ladrilloGris", x:775,y:77,width:100,height:25},
 
-				   {type:"villain", name:"black_knight",x:765,y:155,points:500},
-				   {type:"villain", name:"silver_knight",x:700,y:270,points:250},
-				   {type:"villain", name:"silver_knight",x:800,y:270,points:250},
+				   {type:"villain", name:"black_knight",x:765,y:155,points:300},
+				   {type:"villain", name:"silver_knight",x:700,y:270,points:200},
+				   {type:"villain", name:"silver_knight",x:800,y:270,points:200},
 				   {type:"villain", name:"bronze_knight",x:670,y:405,points:100},
 				   {type:"villain", name:"bronze_knight",x:865,y:400,points:100},
 
@@ -817,7 +819,7 @@ var levels = {
 					html +=   '<button id="button'+(i+1)+'">'+(i+1)+'<span></span><span></span><span></span><span</span></button>'
 				}
 				else{
-					html +=   '<button disabled id="button'+(i+1)+'">'+(i+1)+'<span></span><span></span><span></span><span</span></button>'
+					html +=   '<button id="button'+(i+1)+'">'+(i+1)+'<span></span><span></span><span></span><span</span></button>'
 				}	
 				//Inicializamos el maximo score de cada nivel
 				totalLevels[i] = 0;
@@ -894,8 +896,8 @@ var levels = {
          game.currentLevel.backgroundImage = loader.loadImage("images/backgrounds/"+level.background+".png");
          game.currentLevel.foregroundImage = loader.loadImage("images/backgrounds/"+level.foreground+".png");
 		
-         game.bowImage = loader.loadImage("images/arco"+typebow+".png");
-         game.bowFrontImage =  loader.loadImage("images/arco"+typebow+".png");
+         game.bowImage = loader.loadImage("images/entities/Arco/arco"+typebow+".png");
+         game.bowFrontImage =  loader.loadImage("images/entities/Arco/arco"+typebow+".png");
  
          // Cargar todas la entidades
          for (var i = level.entities.length - 1; i >= 0; i--){	
@@ -1029,13 +1031,13 @@ var entities = {
             restitution:0.2,
         },
 		"ladrilloRojo":{
-			fullHealth:400,
+			fullHealth:300,
             density:1.0,
             friction:0.4,
             restitution:0.15,
 		},
 		"ladrilloMarron":{
-			fullHealth:300,
+			fullHealth:250,
             density:1.0,
             friction:0.4,
             restitution:0.15,
@@ -1047,7 +1049,7 @@ var entities = {
             restitution:0.15,
 		},
 		"ladrilloGris":{
-			fullHealth:500,
+			fullHealth:400,
             density:1.5,
             friction:0.4,
             restitution:0.15,
@@ -1068,8 +1070,8 @@ var entities = {
 			shape:"circle",
 			radius:25,
             density:1.6,
-            friction:0.2,
-            restitution:0.4,
+            friction:0.3,
+            restitution:0.3,
 		},
 		"roca_cadena":{
 			shape:"circle",
@@ -1100,8 +1102,8 @@ var entities = {
             width:60,
             height:80,
             density:1,
-            friction:0.5,
-            restitution:0.6,
+            friction:0.3,
+            restitution:0.5,
         },
 		"bronze_knight":{
             shape:"rectangle",
@@ -1134,7 +1136,7 @@ var entities = {
 				entity.health = definition.fullHealth;
 				entity.fullHealth = definition.fullHealth;
 				entity.shape = "rectangle";	
-				entity.sprite = loader.loadImage("images/entities/"+entity.name+".png");						
+				entity.sprite = loader.loadImage("images/entities/Bloques/"+entity.name+".png");						
 				entity.breakSound = game.breakSound[entity.name];
 				box2d.createRectangle(entity,definition);				
 				break;
