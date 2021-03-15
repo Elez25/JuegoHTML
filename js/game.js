@@ -217,12 +217,12 @@ var game={
 			}
 
      if (game.mode == "firing"){  
-		var canv= document.getElementById('gamecontainer');
-		canv.style.cssText='cursor: auto;';
          if(mouse.down){
              game.panTo(game.bowX);				
              game.currentHero.SetPosition({x:(mouse.x+game.offsetLeft)/box2d.scale,y:mouse.y/box2d.scale});
          } else {
+			var canv= document.getElementById('gamecontainer');
+			canv.style.cssText='cursor: auto;';
              game.mode = "fired";
              game.bowReleasedSound.play();								
              var impulseScaleFactor = 0.75;
