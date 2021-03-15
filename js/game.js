@@ -206,6 +206,8 @@ var game={
 			if (mouse.dragging){
 				if (game.mouseOnCurrentHero()){
 					game.mode = "firing";
+					var canv= document.getElementById('gamecontainer');
+					canv.style.cssText='cursor: pointer;';
 				} else {
 					game.panTo(mouse.x + game.offsetLeft)
 			}
@@ -219,6 +221,8 @@ var game={
              game.panTo(game.bowX);				
              game.currentHero.SetPosition({x:(mouse.x+game.offsetLeft)/box2d.scale,y:mouse.y/box2d.scale});
          } else {
+			 var canv= document.getElementById('gamecontainer');
+			 canv.style.cssText='cursor: auto;';
              game.mode = "fired";
              game.bowReleasedSound.play();								
              var impulseScaleFactor = 0.75;
@@ -819,7 +823,7 @@ var levels = {
 					html +=   '<button id="button'+(i+1)+'">'+(i+1)+'<span></span><span></span><span></span><span</span></button>'
 				}
 				else{
-					html +=   '<button id="button'+(i+1)+'">'+(i+1)+'<span></span><span></span><span></span><span</span></button>'
+					html +=   '<button disabled id="button'+(i+1)+'">'+(i+1)+'<span></span><span></span><span></span><span</span></button>'
 				}	
 				//Inicializamos el maximo score de cada nivel
 				totalLevels[i] = 0;
